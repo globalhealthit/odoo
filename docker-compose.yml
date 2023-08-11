@@ -1,0 +1,35 @@
+services:
+  odoo:
+    restart: always
+    container_name: odoo-main
+    build:
+      context: .
+    ports:
+      - "8069:8069"
+    command: >
+      sh -c "python3 odoo-bin --addons-path=addons -d mydb --db_host=db --db_port=5432 --db_user=ubuntu --db_password=ubuntu -i base"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=mydb
+      - DB_USER=ubuntu
+      - DB_PASSWORD=ubuntu
+    depends_on:
+      - db
+
+  db:
+    restart: always
+    container_name: db
+    ports:
+      - "5432:5432"
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=ubuntu
+      - POSTGRES_PASSWORD=ubuntu
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
+
+
