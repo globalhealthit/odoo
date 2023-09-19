@@ -18,8 +18,13 @@ __pycache__/
 status
 # odoo filestore
 odoo/filestore
+
 # maintenance migration scripts
 odoo/addons/base/maintenance
+
+#Custom data storage
+odoo-data-store
+pgdata
 
 # generated for windows installer?
 install/win32/*.bat
