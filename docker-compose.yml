@@ -4,10 +4,10 @@ services:
     container_name: odoo-main
     build:
       context: .
-    ports:
-      - "8069:8069"
+    expose:
+      - "8069"
     command: >
-      sh -c "python3 odoo-bin --addons-path=addons -d mydb --db_host=db --db-filter=.* --db_port=5432 --db_user=${DB_USER} --db_password=${DB_PASSWORD} -i base"
+      sh -c "python3 odoo-bin --addons-path=addons --proxy-mode -d mydb --db_host=db --db-filter=.* --db_port=5432 --db_user=${DB_USER} --db_password=${DB_PASSWORD} -i base"
     volumes:
       - ./odoo-data-store:/root/.local/share/Odoo 
     environment:
@@ -17,6 +17,22 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - db
+
+  nginx:
+    restart: always
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/letsencrypt/live/odoo.shoprideon.com/fullchain.pem:/etc/ssl/certs/fullchain.pem
+      - /etc/letsencrypt/live/odoo.shoprideon.com/privkey.pem:/etc/ssl/private/privkey.pem
+    depends_on:
+      - odoo
+
 
   db:
     restart: always
