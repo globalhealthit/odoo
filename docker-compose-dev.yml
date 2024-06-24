@@ -10,6 +10,7 @@ services:
       sh -c "python3 odoo-bin --addons-path=addons --proxy-mode -d mydb --db_host=db --db-filter=.* --db_port=5432 --db_user=${DB_USER} --db_password=${DB_PASSWORD} -i base"
     volumes:
       - ./odoo-data-store:/root/.local/share/Odoo 
+      - ./:/app
     environment:
       - DB_HOST=db
       - DB_NAME=mydb
@@ -23,16 +24,14 @@ services:
     container_name: nginx
     build:
       context: ./nginx
+      args:
+        NGINX_CONF: odoo_dev.conf
       dockerfile: Dockerfile
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - /etc/letsencrypt/live/gheit.com.np/fullchain.pem:/etc/ssl/certs/fullchain.pem
-      - /etc/letsencrypt/live/gheit.com.np/privkey.pem:/etc/ssl/private/privkey.pem
     depends_on:
       - odoo
-
 
   db:
     restart: always
@@ -45,10 +44,4 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
-      #- pgdata:/var/lib/postgresql/data
       - ./pgdata:/var/lib/postgresql/data
-
-        #volumes:
-        #  pgdata: {}
-
-

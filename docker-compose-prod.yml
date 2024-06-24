@@ -1,0 +1,50 @@
+services:
+  odoo:
+    restart: always
+    container_name: odoo-main
+    build:
+      context: .
+    expose:
+      - "8069"
+    command: >
+      sh -c "python3 odoo-bin --addons-path=addons --proxy-mode -d mydb --db_host=db --db-filter=.* --db_port=5432 --db_user=${DB_USER} --db_password=${DB_PASSWORD} -i base"
+    volumes:
+      - ./odoo-data-store:/root/.local/share/Odoo 
+    environment:
+      - DB_HOST=db
+      - DB_NAME=mydb
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - db
+
+  nginx:
+    restart: always
+    container_name: nginx
+    build:
+      context: ./nginx
+      args:
+        NGINX_CONF: odoo_prod.conf
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/letsencrypt/live/gheit.com.np/fullchain.pem:/etc/ssl/certs/fullchain.pem
+      - /etc/letsencrypt/live/gheit.com.np/privkey.pem:/etc/ssl/private/privkey.pem
+    depends_on:
+      - odoo
+
+
+  db:
+    restart: always
+    container_name: db
+    ports:
+      - "5432:5432"
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
