@@ -32,6 +32,7 @@ services:
     volumes:
       - /etc/letsencrypt/live/gheit.com.np/fullchain.pem:/etc/ssl/certs/fullchain.pem
       - /etc/letsencrypt/live/gheit.com.np/privkey.pem:/etc/ssl/private/privkey.pem
+      - /var/www/.well-known/acme-challenge:/var/www/.well-known/acme-challenge
     depends_on:
       - odoo
 
