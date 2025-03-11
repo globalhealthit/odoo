@@ -30,6 +30,7 @@ services:
       - 80:80
       - 443:443
     volumes:
+      - /var/www/.well-known/acme-challenge:/var/www/.well-known/acme-challenge
       - /etc/letsencrypt/live/odoodev.shoprideon.com/fullchain.pem:/etc/ssl/certs/fullchain.pem
       - /etc/letsencrypt/live/odoodev.shoprideon.com/privkey.pem:/etc/ssl/private/privkey.pem
     depends_on:
