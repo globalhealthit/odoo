@@ -7,14 +7,9 @@ services:
     expose:
       - "8069"
     command: >
-      sh -c "python3 odoo-bin --addons-path=addons --proxy-mode -d mydb --db_host=db --db-filter=.* --db_port=5432 --db_user=${DB_USER} --db_password=${DB_PASSWORD} -i base"
+      sh -c "python3 odoo16/odoo-bin -c odoo.conf"
     volumes:
       - ./odoo-data-store:/root/.local/share/Odoo 
-    environment:
-      - DB_HOST=db
-      - DB_NAME=mydb
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
     depends_on:
       - db
 
@@ -46,8 +41,6 @@ services:
       - "5432:5432"
     image: postgres:12-alpine
     environment:
-      - POSTGRES_DB=mydb
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=odoo
     volumes:
       - ./pgdata:/var/lib/postgresql/data
