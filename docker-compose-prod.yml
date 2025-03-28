@@ -1,3 +1,4 @@
+
 services:
   odoo:
     restart: always
@@ -10,6 +11,8 @@ services:
       sh -c "python3 odoo16/odoo-bin -c odoo.conf"
     volumes:
       - ./odoo-data-store:/root/.local/share/Odoo 
+      - ./odoo.conf:/app/odoo.conf:ro
+      - ./odoo-custom-addons:/app/odoo-custom-addons
     depends_on:
       - db
 
@@ -42,5 +45,6 @@ services:
     image: postgres:12-alpine
     environment:
       - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=G10b3lh3alth@420
     volumes:
       - ./pgdata:/var/lib/postgresql/data
