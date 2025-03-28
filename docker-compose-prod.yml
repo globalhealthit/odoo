@@ -13,6 +13,8 @@ services:
       - ./odoo-data-store:/root/.local/share/Odoo 
       - ./odoo.conf:/app/odoo.conf:ro
       - ./odoo-custom-addons:/app/odoo-custom-addons
+    environment:
+      - DB_HOST=db
     depends_on:
       - db
 
@@ -46,5 +48,6 @@ services:
     environment:
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=G10b3lh3alth@420
+      - POSTGRES_DB=postgres
     volumes:
       - ./pgdata:/var/lib/postgresql/data
