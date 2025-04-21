@@ -9,8 +9,8 @@
             <xpath expr="//field[@name='birthday']"
                    position="after">
             </xpath>
-            <xpath expr="//page"
-                   position="replace"/>
+            <!-- <xpath expr="//page"
+                   position="replace"/> -->
 
             <notebook position="inside">
 
