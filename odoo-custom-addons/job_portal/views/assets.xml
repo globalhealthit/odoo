@@ -1,0 +1,266 @@
+<odoo>
+    <data>
+        <!--assets frontend -->
+        <!-- <template id="website_pos_assets_frontend"
+                  inherit_id="website.assets_frontend"
+                  name="assets of website">
+            <xpath expr="//link[last()]" position="after">
+                <link href="/job_portal/static/src/css/yamm.css"
+                      rel="stylesheet" type="text/css"/>
+                <link rel="stylesheet" type="text/css"
+                      href="/job_portal/static/src/css/style.css"/>
+                <script type="text/javascript"
+                        src="/job_portal/static/src/js/validator.js"/>
+                <script type="text/javascript"
+                        src='/job_portal/static/src/js/main.js'></script>
+            </xpath>
+        </template> -->
+
+        <!-- <template id="my_profile_link" name="Link to frontend user profile"
+                  inherit_id="portal.frontend_layout">
+            <xpath expr="//a[@id='o_logout']" position="before">
+                <a href="/my/account/" class="dropdown-item" role="menuitem">My Profile</a>
+            </xpath>
+        </template> -->
+
+        <!-- id for heading navigation bar -->
+        <!-- <template id="layout_inherit" inherit_id="portal.frontend_layout">
+            <xpath expr="//header/nav" position="attributes">
+                <attribute name="id">nav</attribute>
+            </xpath>
+        </template> -->
+        <!-- id for heading navigation bar -->
+
+        
+        <template id="job_portal_apply_template"
+                  inherit_id="website_hr_recruitment.detail"
+                  name="My Custom Job Detail">
+                  <xpath expr="//div[@id='wrap']" position="replace">
+                    <div id="wrap" class="js_hr_recruitment">
+                        <section class="mb16 bg-white">
+                            <br/>
+                            <div class="container">
+                                <div class="pull-right">
+                                    <div class="btn btn-primary btn-lg mt32 mb4" groups="base.group_system">
+                                        <t t-esc="job.application_count"/>
+                                                Applicants
+                                    
+                                    
+                                    
+                                    </div>
+                                    <t t-if="not request.session.uid">
+                                        <a t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg pull-right mt32 mb4">
+                                                    Login to Apply
+                                                </a>
+                                    </t>
+                                </div>
+                                <label class="mb0 mt16">
+                                    <a href="/jobs">Jobs</a>
+                                </label>
+                                <h1 class="mb0 mt0" t-field="job.name"/>
+                            </div>
+                        </section>
+                        <section class="container">
+                            <div class="row"/>
+                        </section>
+                        <t t-set="dat1" t-value="job.sudo().get_jb_details()"/>
+                        <section class="profile-detail">
+                            <div class="container mt-3">
+                                <div class="card" style="border: 0px;">
+                                    <div class="card-body">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-8">
+                                                <div class="clearfix">
+                                                    <!-- <t t-if="dat1[0]['lnk']">
+                                                        <img t-att-src="dat1[0]['lnk']" alt="Profile" class="pull-left mr-2" height="150" width="150"/>
+                                                    </t> -->
+                                                    <!-- <t t-else=""> -->
+                                                    <img alt="Profile" class="pull-left mr-2" height="150" width="150" src="/web/image/3033/blank_dp.png"/>
+                                                    <!-- </t> -->
+                                                    <h5 class="card-title">
+                                                        <t t-esc="dat1[0]['req_name']"/>
+                                                    </h5>
+                                                    <ul class="list-unstyled">
+                                                        <li>
+                                                            <i class="fa fa-phone fa-fw"/>
+                                                            <t t-esc="dat1[0]['req_phone']"/>
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-envelope fa-fw"/>
+                                                            <t t-esc="dat1[0]['req_mail']"/>
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-wifi fa-fw"/>
+                                                            <t t-esc="dat1[0]['req_website']"/>
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-map-marker fa-fw"/>
+                                                            <span t-field="job.address_id" t-field-options="{                                 &quot;widget&quot;: &quot;contact&quot;,                                 &quot;fields&quot;: [&quot;city&quot;],                                 &quot;no_tag_br&quot;: True                             }"/>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <br/>
+                                                <!-- <p>
+                                                    <t t-esc="dat1[0]['des']"/>
+                                                </p> -->
+                                            </div>
+                                            <div class="col-md-4">
+                                                <ul class="social">
+                                                    <li>
+                                                        <a t-attf-href="https://www.facebook.com/sharer/sharer.php?u=#{url_val}" class="facebook" target="_blank">
+                                                            <i class="fa fa-facebook"/>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a t-attf-href="https://twitter.com/intent/tweet?text=#{job.name}&amp;url=#{url_val}" class="twitter" target="_blank">
+                                                            <i class="fa fa-twitter"/>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a t-attf-href="http://www.linkedin.com/shareArticle?mini=true&amp;url=#{url_val}" class="linkedin" target="_blank">
+                                                            <i class="fa fa-linkedin"/>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a t-attf-href="mailto:?body=#{url_val}&amp;subject=#{job.name}" class="email">
+                                                            <i class="fa fa-envelope"/>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="basic-information">
+                                            <t t-set="url_val" t-value="job.sudo().get_jb_url()"/>
+                                            <div class="col-md-9 col-sm-9">
+                                                <div class="profile-content">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <i class="fa fa-id-card fa-fw"/> Job Details
+                                        
+                                                      
+                                                        
+                                                        
+                                                        </div>
+                                                    </div>
+                                                    <ul class="information">
+                                                        <li>
+                                                            <span>No of Vacancy:</span>
+                                                            <t t-esc="job.no_of_recruitment"/>
+                                                        </li>
+                                                        <li>
+                                                            <span>Job Type:</span>
+                                                            <t t-if="job.job_type == 'fulltime'">
+                                                                <span class="badge badge-success">Full Time</span>
+                                                            </t>
+                                                            <t t-if="job.job_type == 'parttime'">
+                                                                <span class="badge badge-info">Part Time</span>
+                                                            </t>
+                                                        </li>
+                                                        <li>
+                                                            <span>Salary Type:</span>
+                                                            <t t-if="job.offered_salary_type == 'nego'">
+                                                              Negotiable
+                                                            </t>
+                                                            <t t-if="job.offered_salary_type == 'range'">
+                                                              Range (  
+                                                                
+                                                                
+                                                                <t t-esc="job.min_salary"/> -  
+                                                                
+                                                                
+                                                                <t t-esc="job.max_salary"/>)
+                                                            </t>
+                                                            <t t-if="job.offered_salary_type == 'fixed'">
+                                                              Fixed (  
+                                                                
+                                                                
+                                                                <t t-esc="job.fix_salary"/> )
+                                                            </t>
+                                                        </li>
+                                                        <li>
+                                                            <span>Qualification:</span>
+                                                            <t t-if="job.study_field == 'slc'">
+                                                              SLC/SEE
+                                                            </t>
+                                                            <t t-if="job.study_field == '+2'">
+                                                              +2 
+                                                            </t>
+                                                            <t t-if="job.study_field == 'bachelor'">
+                                                              Bachelors
+                                                            </t>
+                                                            <t t-if="job.study_field == 'master'">
+                                                              Masters
+                                                            </t>
+                                                            <t t-if="job.study_field == 'Phd'">
+                                                              Phd
+                                                            </t>
+                                                        </li>
+                                                        <li>
+                                                            <span>Apply Before:</span>
+                                                            <t t-esc="job.closing_date"/>
+                                                        </li>
+                                                        <li>
+                                                            <span>Experience:</span>
+                                                            <t t-esc="job.experience_req"/>
+                                                        </li>
+                                                        <li>
+                                                            <span>Skills:</span>
+                                                            <t t-foreach="job.sudo().skill_ids" t-as="skl">
+                                                                <span class="badge badge-info">
+                                                                    <t t-esc="skl.name"/>
+                                                                </span>
+                                                            </t>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <i class="fa fa-id-card fa-fw"/> Job Description:
+                                        
+                                                
+                                                
+                                                
+                                                </div>
+                                                <div class="panel-body">
+                                                    <t t-out="job.website_description"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <br/>
+                        <div class="oe_structure">
+                            <section class="o_job_bottom_bar mt32 mb32">
+                                <div class="text-center">
+                                    <!--<t t-if="datetime.datetime.now().strftime('%Y-%m-%d') &lt; job.closing_date">-->
+                                    <t t-if="request.session.uid">
+                                        <a t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg">
+                                              Apply 
+                                                  </a>
+                                    </t>
+                                    <!--</t>-->
+                                    <!--<t t-else="">-->
+                                    <!--This Job is expired.-->
+                                    <!--</t>-->
+                                    <t t-if="not request.session.uid">
+                                        <a t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg">
+                                          Login to Apply
+                                                </a>
+                                    </t>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </xpath>
+        </template>
+    </data>
+</odoo>

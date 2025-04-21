@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_job_applicant,hr.applicant.public,hr_recruitment.model_hr_applicant,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_academic,access.hr.academic,model_hr_academic,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_experience,access_hr_experience,model_hr_experience,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_certification,access_hr_certification,model_hr_certification,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_job_applicant_public,hr.applicant.public.public,hr_recruitment.model_hr_applicant,,1,0,0,0
+access_hr_academic_public,access.hr.academic.public,model_hr_academic,,1,0,0,0
+access_hr_experience_public,access_hr_experience.public,model_hr_experience,,1,0,0,0
+access_hr_certification_public,access_hr_certification.public,model_hr_certification,,1,0,0,0
+access_hr_job_children,access_hr_job_children,model_hr_employee_children,,1,0,0,0
+access_hr_job_level,access_hr_job_level,model_hr_job_level,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_my_skills,access_hr_my_skills,model_hr_my_skills,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_res_groups,access_res_groups,base.model_res_groups,,1,0,0,0
+access_hr_job_sector,access_hr_job_sector,model_hr_job_sector,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+

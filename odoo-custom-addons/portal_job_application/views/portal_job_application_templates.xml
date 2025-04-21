@@ -1,0 +1,73 @@
+<odoo>
+    <template id="portal_my_applications" name="My Job Applications">
+        <t t-call="portal.portal_layout">
+            <div class="container">
+                <h2>My Job Applications</h2>
+                <t t-foreach="applicants" t-as="app">
+                    <t t-if="app.stage_id.id == 5">
+                        <span>Please Download the file fillup and upload it below.<a href="https://gheit.com.np/web/content/3472?download=true" class="bi bi-download">Download</a></span> 
+                    </t>
+                </t> 
+               
+               <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Status</th>
+                            <th>Applied On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="applicants" t-as="app">
+                            <tr>
+                                <td><t t-esc="app.job_id.name"/></td>
+                                <td><t t-esc="app.stage_id.name"/></td>
+                                <td><t t-esc="app.create_date.strftime('%Y-%m-%d')"/></td>
+                                <t t-if="app.stage_id.id == 5">
+                                    <td>
+                                            <!-- Check if the file has already been uploaded -->
+                                        <t t-if="app.position_pdf">
+                                            <a t-att-href="'/web/content/hr.applicant/%s/position_pdf?download=true' % app.id" target="_blank" class="btn btn-outline-secondary btn-sm mb-1">
+                                                <i class="fa fa-download me-1"> View Uploaded PDF</i>
+                                            </a>
+                                            <br/>
+                                        </t>
+
+                                        <!-- Upload Form -->
+                                        <form action="/my/job-applications/upload" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="applicant_id" t-att-value="app.id"/>
+                                            <input type="file" name="position_pdf" class="form-control form-control-sm mb-1"/>
+                                            <button type="submit" class="btn btn-sm btn-primary">
+                                                <i class="fa fa-upload me-1"/> Upload / Replace
+                                            </button>
+                                        </form>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="my_job_link" name="Link to frontend portal" inherit_id="portal.user_dropdown">
+        <xpath expr="//*[@id='o_logout_divider']" position="before">
+            <a href="/my/job-applications" role="menuitem" class="dropdown-item ps-3">
+                <i class="fa fa-fw fa-id-card-o me-1 small text-muted"/> My Jobs
+            </a>
+        </xpath>
+    </template>
+
+    <record id="inherited_hr_applicant_form_pdf" model="ir.ui.view">
+        <field name="name">inherited.hr.applicant.pdf.form</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="position_pdf" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
