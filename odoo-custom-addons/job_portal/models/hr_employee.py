@@ -43,5 +43,6 @@ class HrEmployee(models.Model):
                                         help="Certifications")
     fam_children_ids = fields.One2many('hr.employee.children', 'employee_id',
                                        "Children")
+    emergency_contact_ids = fields.One2many('emergency.contact', 'employee_id', 'Emergency Contact', help="Emergency Contact")
     operation_type = fields.Char()
     opr_id = fields.Char()

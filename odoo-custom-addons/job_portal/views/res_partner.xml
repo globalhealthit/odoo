@@ -5,13 +5,30 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
+                <page string="Emergency Contact" groups="base.group_user,base.group_hr_user">
+                    <field name="emergency_contact_ids" context="{'default_partner_id': active_id}">
+                        <tree string="Academic Experiences">
+                            <field name="name"/>
+                            <field name="relation"/>
+                            <field name="phone"/>
+                        </tree>
+                        <form string="Emergency Contact">
+                            <group>
+                                <group name="main">
+                                    <field name="name"/>
+                                    <field name="relation"/>
+                                    <field name="phone"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </page>
                 <page string="Academic Experiences">
-                    <field name="academic_ids">
+                    <field name="academic_ids" context="{'default_partner_id': active_id}">
                         <tree string="Academic Experiences">
                             <field name="name" string="Qualification"/>
                             <field name="study_field"/>
-                            <field name="organization"
-                                   string="Institution"/>
+                            <field name="organization" string="Institution"/>
                             <field name="location"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
@@ -20,35 +37,28 @@
                         <form string="Academic Experience">
                             <group>
                                 <group name="main">
-                                    <field name="name"
-                                           string="Qualification"/>
+                                    <field name="name" string="Qualification"/>
                                     <field name="study_field"/>
                                     <field name="start_date"/>
-                                    <field name="is_still"
-                                           string="Present"/>
-                                    <field name="end_date"
-                                           attrs="{'invisible':[('is_still', '=', True)]}"/>
+                                    <field name="is_still" string="Present"/>
+                                    <field name="end_date" attrs="{'invisible':[('is_still', '=', True)]}"/>
                                     <field name="grade"/>
                                 </group>
                                 <group>
-                                    <field name="organization"
-                                           string="Institution"/>
+                                    <field name="organization" string="Institution"/>
                                     <field name="location"/>
                                 </group>
                             </group>
                             <separator string="Activities" colspan="4"/>
                             <field name="activities"/>
                             <separator string="Description" colspan="4"/>
-                            <field name="description" colspan="4"
-                                   nolabel="1"/>
+                            <field name="description" colspan="4" nolabel="1"/>
                         </form>
                     </field>
                 </page>
 
-                <page string="Professional Experiences"
-                      groups="base.group_user,base.group_hr_user">
-                    <field name="experience_ids"
-                           context="{'default_employee_id': active_id}">
+                <page string="Professional Experiences" groups="base.group_user,base.group_hr_user">
+                    <field name="experience_ids" context="{'default_partner_id': active_id}">
                         <tree string="Professional Experiences">
                             <field name="name" string="Position"/>
                             <field name="organization" string="Employer"/>
@@ -59,41 +69,27 @@
                             <group>
                                 <group name="main">
                                     <field name="name" string="Position"/>
-                                    <field name="organization"
-                                           string="Employer"/>
+                                    <field name="organization" string="Employer"/>
                                     <field name="location"/>
                                     <field name="type" string="Work Type"/>
                                 </group>
                                 <group>
                                     <field name="start_date"/>
-                                    <field name="is_still"
-                                           string="Present"/>
-                                    <field name="end_date"
-                                           attrs="{'invisible':[('is_still', '=', True)]}"/>
-                                    
+                                    <field name="is_still" string="Present"/>
+                                    <field name="end_date" attrs="{'invisible':[('is_still', '=', True)]}"/>
                                 </group>
-                                <!-- <group string="For Verification">
-                                    <field name="referee_name"/>
-                                    <field name="referee_position"/>
-                                    <field name="referee_contact"/>
-
-                                </group> -->
                             </group>
                             <separator string="Description" colspan="4"/>
-                            <field name="description" colspan="4"
-                                   nolabel="1"/>
+                            <field name="description" colspan="4" nolabel="1"/>
                         </form>
                     </field>
                 </page>
 
-                <page string="Certifications"
-                      groups="base.group_user,base.group_hr_user">
-                    <field name="certification_ids"
-                           context="{'default_employee_id': active_id}">
+                <page string="Certifications" groups="base.group_user,base.group_hr_user">
+                    <field name="certification_ids" context="{'default_partner_id': active_id}">
                         <tree string="Certifications">
                             <field name="name" string="Certification"/>
-                            <field name="certification"
-                                   string="# Certificate"/>
+                            <field name="certification" string="# Certificate"/>
                             <field name="organization" string="Issued By"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
@@ -101,24 +97,19 @@
                         <form string="Certifications">
                             <group>
                                 <group name="main">
-                                    <field name="name"
-                                           string="Certification"/>
-                                    <field name="certification"
-                                           string="# Certification"/>
+                                    <field name="name" string="Certification"/>
+                                    <field name="certification" string="# Certification"/>
                                     <field name="start_date"/>
                                     <field name="is_still"/>
-                                    <field name="end_date"
-                                           attrs="{'invisible':[('is_still', '=', True)]}"/>
+                                    <field name="end_date" attrs="{'invisible':[('is_still', '=', True)]}"/>
                                 </group>
                                 <group>
-                                    <field name="organization"
-                                           string="Issued By"/>
+                                    <field name="organization" string="Issued By"/>
                                     <field name="location"/>
                                 </group>
                             </group>
                             <separator string="Description" colspan="4"/>
-                            <field name="description" colspan="4"
-                                   nolabel="1"/>
+                            <field name="description" colspan="4" nolabel="1"/>
                         </form>
                     </field>
                 </page>

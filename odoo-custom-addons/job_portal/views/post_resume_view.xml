@@ -32,17 +32,19 @@
                 <input type="hidden" name="partner_id" t-att-value="partner.id"/>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"/>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"/>
-                
+
                 <!-- Position Desired -->
                 <div class="card mb-4">
                     <div class="card-header">Position Desired</div>
                     <div class="card-body row">
-                        <t t-set="positions" t-value="[('nurse', 'Registered Nurse'), ('msw', 'MSW'), ('speech', 'Speech Therapist'), ('lvn', 'LVN'), ('physical', 'Physical Therapist'), ('occupation', 'Occupational Therapist'), ('others', 'Others')]"/>
+                        <t t-set="positions" t-value="[('nurse', 'Registered Nurse'), ('msw', 'MSW'), ('speech', 'Speech Therapist'), ('lvn', 'LVN'), ('physical', 'Physical Therapist'), ('occupation', 'Occupational Therapist'), ('physician', 'Physician'), ('others', 'Others')]"/>
                         <t t-foreach="positions" t-as="pos">
                             <div class="col-md-6 mb-2">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="position_desired" t-att-id="'position_' + pos[0]" t-att-value="pos[0]" t-att-checked="applicant.position_desired == pos[0]"/>
-                                    <label class="form-check-label" t-att-for="'position_' + pos[0]"><t t-esc="pos[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'position_' + pos[0]">
+                                        <t t-esc="pos[1]"/>
+                                    </label>
                                 </div>
                             </div>
                         </t>
@@ -103,25 +105,9 @@
                 <div class="card mb-4">
                     <div class="card-header">Correspondence Address</div>
                     <div class="card-body row">
-                        <div class="form-group col-md-6">
-                            <label>Address Line 1</label>
-                            <input type="text" name="street_ht" class="form-control" t-att-value="applicant.street_ht" required="required"/>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Address Line 2</label>
-                            <input type="text" name="street2_ht" class="form-control" t-att-value="applicant.street2_ht"/>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>City</label>
-                            <input type="text" name="city_ht" class="form-control" t-att-value="applicant.city_ht" required="required"/>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Zip</label>
-                            <input type="text" name="zip_ht" class="form-control" t-att-value="applicant.zip_ht" required="required"/>
-                        </div>
                         <div class="form-group col-md-4">
                             <label>Country</label>
-                            <select name="country_id" class="form-control" required="required">
+                            <select name="country_id" class="form-control country-applicant" required="required">
                                 <option value="">--Select--</option>
                                 <t t-foreach="countries" t-as="country">
                                     <option t-att-value="country.id" t-att-selected="country.id == applicant.country_id.id">
@@ -132,7 +118,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>State</label>
-                            <select name="state_id_ht" class="form-control">
+                            <select name="state_id_ht" class="form-control state-applicant">
                                 <option value="">--Select--</option>
                                 <t t-foreach="states" t-as="state">
                                     <t t-if="state.country_id.id == applicant.country_id.id">
@@ -143,6 +129,22 @@
                                 </t>
                             </select>
                         </div>
+                        <div class="form-group col-md-4">
+                            <label>City</label>
+                            <input type="text" name="city_ht" class="form-control" t-att-value="applicant.city_ht" required="required"/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Zip</label>
+                            <input type="text" name="zip_ht" class="form-control" t-att-value="applicant.zip_ht" required="required"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Address Line 1</label>
+                            <input type="text" name="street_ht" class="form-control" t-att-value="applicant.street_ht" required="required"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Address Line 2</label>
+                            <input type="text" name="street2_ht" class="form-control" t-att-value="applicant.street2_ht"/>
+                        </div>
                     </div>
                 </div>
 
@@ -150,47 +152,46 @@
                 <div class="card mb-4">
                     <div class="card-header">Emergency Contact</div>
                     <div class="card-body row">
-                        <!-- Contact 1 -->
-                        <div class="form-group col-md-4">
-                        <label>Name</label>
-                        <input type="text" name="emergency_contact_1" class="form-control" t-att-value="applicant.emergency_contact_1"/>
+                        <div class="col-lg-4">
+                            <button type="button" class="emergency_contact_btn btn btn-primary pull-right">
+                                Add More
+                            </button>
                         </div>
-                        <div class="form-group col-md-4">
-                        <label>Relationship</label>
-                        <input type="text" name="emergency_relation_1" class="form-control" t-att-value="applicant.emergency_relation_1"/>
-                        </div>
-                        <div class="form-group col-md-4">
-                        <label>Phone</label>
-                        <input type="text" name="emergency_phone_1" class="form-control" t-att-value="applicant.emergency_phone_1"/>
-                        </div>
-
-                        <!-- Contact 2 -->
-                        <div class="form-group col-md-4">
-                        <label>Name</label>
-                        <input type="text" name="emergency_contact_2" class="form-control" t-att-value="applicant.emergency_contact_2"/>
-                        </div>
-                        <div class="form-group col-md-4">
-                        <label>Relationship</label>
-                        <input type="text" name="emergency_relation_2" class="form-control" t-att-value="applicant.emergency_relation_2"/>
-                        </div>
-                        <div class="form-group col-md-4">
-                        <label>Phone</label>
-                        <input type="text" name="emergency_phone_2" class="form-control" t-att-value="applicant.emergency_phone_2"/>
-                        </div>
-
-                        <!-- Contact 3 -->
-                        <div class="form-group col-md-4">
-                        <label>Name</label>
-                        <input type="text" name="emergency_contact_3" class="form-control" t-att-value="applicant.emergency_contact_3"/>
-                        </div>
-                        <div class="form-group col-md-4">
-                        <label>Relationship</label>
-                        <input type="text" name="emergency_relation_3" class="form-control" t-att-value="applicant.emergency_relation_3"/>
-                        </div>
-                        <div class="form-group col-md-4">
-                        <label>Phone</label>
-                        <input type="text" name="emergency_phone_3" class="form-control" t-att-value="applicant.emergency_phone_3"/>
-                        </div>
+                        <table id="emergency_contact_table" class="emergency_contact_table table table-responsive mt32 mb32">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">RelationShip</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="partner.emergency_contact_ids" t-as="emergency_contact_id">
+                                    <td>
+                                        <t t-esc="emergency_contact_id.name"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="emergency_contact_id.relation"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="emergency_contact_id.phone"/>
+                                    </td>
+                                    <td>
+                                        <button type="button" t-att-data-emergency_contact_id="emergency_contact_id.id" class="btn edit_emergency_contact_id">
+                                            <i class="fa fa-pencil-square-o"/>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" t-att-data-emergency_contact_id="emergency_contact_id.id" class="btn delete_emergency_contact_id">
+                                            <i class="fa fa-trash"/>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <t t-call="job_portal.job_portal_my_emergency_contacts"/>
                     </div>
                 </div>
 
@@ -269,14 +270,14 @@
                         <table id="certificate_desc_table" class="certificate_desc_table table table-responsive mt32 mb32">
                             <thead>
                                 <tr>
-                                    <th scope="col">Name*</th>
-                                    <th scope="col">Start Date*</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Start Date</th>
                                     <th scope="col">End Date</th>
-                                    <th scope="col">Grade*</th>
-                                    <th scope="col">Organization*</th>
-                                    <th scope="col">Certification*</th>
-                                    <th scope="col">Location*</th>
-                                    <th scope="col">Description*</th>
+                                    <th scope="col">Grade</th>
+                                    <th scope="col">Organization</th>
+                                    <th scope="col">Certification</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
@@ -336,13 +337,13 @@
                         <table id="exp_desc_table" class="exp_desc_table table table-responsive mt32 mb32">
                             <thead>
                                 <tr>
-                                    <th scope="col">Name*</th>
-                                    <th scope="col">Start Date*</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Start Date</th>
                                     <th scope="col">End Date</th>
-                                    <th scope="col">Organization*</th>
-                                    <th scope="col">Location*</th>
-                                    <th scope="col">Description*</th>
-                                    <th scope="col">Type*</th>
+                                    <th scope="col">Organization</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Type</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
@@ -424,191 +425,194 @@
                 </div>
 
 
-        <!-- Skills / Trainings -->
-        <div class="card mb-4">
-            <div class="card-header">SKILLS/TRAININGS ATTENDED</div>
-            <div class="card-body row">
-                <!-- Skill 1 -->
-                <div class="form-group col-md-4">
-                    <label>Date</label>
-                    <input type="date" name="skill_date_1" class="form-control" t-att-value="applicant.skill_date_1"/>
-                </div>
-                <div class="form-group col-md-8">
-                    <label>Skill Name</label>
-                    <input type="text" name="skill_name_1" class="form-control" t-att-value="applicant.skill_name_1"/>
+                <!-- Skills / Trainings -->
+                <div class="card mb-4">
+                    <div class="card-header">SKILLS/TRAININGS ATTENDED</div>
+                    <div class="card-body row">
+                        <!-- Skill 1 -->
+                        <div class="form-group col-md-4">
+                            <label>Date</label>
+                            <input type="date" name="skill_date_1" class="form-control" t-att-value="applicant.skill_date_1"/>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label>Skill Name</label>
+                            <input type="text" name="skill_name_1" class="form-control" t-att-value="applicant.skill_name_1"/>
+                        </div>
+
+                        <!-- Skill 2 -->
+                        <div class="form-group col-md-4">
+                            <label>Date</label>
+                            <input type="date" name="skill_date_2" class="form-control" t-att-value="applicant.skill_date_2"/>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label>Skill Name</label>
+                            <input type="text" name="skill_name_1" class="form-control" t-att-value="applicant.skill_name_2"/>
+                        </div>
+
+                        <!-- Skill 3 -->
+                        <div class="form-group col-md-4">
+                            <label>Date</label>
+                            <input type="date" name="skill_date_3" class="form-control" t-att-value="applicant.skill_date_3"/>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label>Skill Name</label>
+                            <input type="text" name="skill_name_3" class="form-control" t-att-value="applicant.skill_name_3"/>
+                        </div>
+
+                        <!-- Skill 4 -->
+                        <div class="form-group col-md-4">
+                            <label>Date</label>
+                            <input type="date" name="skill_date_4" class="form-control" t-att-value="applicant.skill_date_4"/>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label>Skill Name</label>
+                            <input type="text" name="skill_name_4" class="form-control" t-att-value="applicant.skill_name_4"/>
+                        </div>
+
+                        <!-- Tests -->
+                        <div class="form-group col-md-4">
+                            <label>CPR Expiration Date</label>
+                            <input type="date" name="cpr_expiration_date" class="form-control" t-att-value="applicant.cpr_expiration_date"/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Last Physical Exam Date</label>
+                            <input type="date" name="last_physical_exam_date" class="form-control" t-att-value="applicant.last_physical_exam_date"/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Last TB/Chest X-ray Date</label>
+                            <input type="date" name="last_xray_date" class="form-control" t-att-value="applicant.last_xray_date"/>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Skill 2 -->
-                <div class="form-group col-md-4">
-                    <label>Date</label>
-                    <input type="date" name="skill_date_2" class="form-control" t-att-value="applicant.skill_date_2"/>
-                </div>
-                <div class="form-group col-md-8">
-                    <label>Skill Name</label>
-                    <input type="text" name="skill_name_1" class="form-control" t-att-value="applicant.skill_name_2"/>
-                </div>
+                <!-- References -->
+                <div class="card mb-4">
+                    <div class="card-header">References (Please Provide Atleast 2 Professional References If Not Specified Above)</div>
+                    <div class="card-body row">
+                        <!-- Refernce 1 -->
+                        <div class="form-group col-md-3">
+                            <label>Name</label>
+                            <input type="text" name="reference_name1" class="form-control" t-att-value="applicant.reference_name1"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Relationship</label>
+                            <input type="text" name="reference_rln1" class="form-control" t-att-value="applicant.reference_rln1"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Company</label>
+                            <input type="text" name="reference_cmpny1" class="form-control" t-att-value="applicant.reference_cmpny1"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Contact Number</label>
+                            <input type="text" name="reference_contact1" class="form-control" t-att-value="applicant.reference_contact1"/>
+                        </div>
 
-                <!-- Skill 3 -->
-                <div class="form-group col-md-4">
-                    <label>Date</label>
-                    <input type="date" name="skill_date_3" class="form-control" t-att-value="applicant.skill_date_3"/>
-                </div>
-                <div class="form-group col-md-8">
-                    <label>Skill Name</label>
-                    <input type="text" name="skill_name_3" class="form-control" t-att-value="applicant.skill_name_3"/>
-                </div>
+                        <!-- Refernce 2 -->
+                        <div class="form-group col-md-3">
+                            <label>Name</label>
+                            <input type="text" name="reference_name2" class="form-control" t-att-value="applicant.reference_name2"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Relationship</label>
+                            <input type="text" name="reference_rln2" class="form-control" t-att-value="applicant.reference_rln2"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Company</label>
+                            <input type="text" name="reference_cmpny2" class="form-control" t-att-value="applicant.reference_cmpny2"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Contact Number</label>
+                            <input type="text" name="reference_contact2" class="form-control" t-att-value="applicant.reference_contact2"/>
+                        </div>
 
-                <!-- Skill 4 -->
-                <div class="form-group col-md-4">
-                    <label>Date</label>
-                    <input type="date" name="skill_date_4" class="form-control" t-att-value="applicant.skill_date_4"/>
-                </div>
-                <div class="form-group col-md-8">
-                    <label>Skill Name</label>
-                    <input type="text" name="skill_name_4" class="form-control" t-att-value="applicant.skill_name_4"/>
-                </div>
+                        <!-- Refernce 3 -->
+                        <div class="form-group col-md-3">
+                            <label>Name</label>
+                            <input type="text" name="reference_name3" class="form-control" t-att-value="applicant.reference_name3"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Relationship</label>
+                            <input type="text" name="reference_rln3" class="form-control" t-att-value="applicant.reference_rln3"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Company</label>
+                            <input type="text" name="reference_cmpny3" class="form-control" t-att-value="applicant.reference_cmpny3"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Contact Number</label>
+                            <input type="text" name="reference_contact3" class="form-control" t-att-value="applicant.reference_contact3"/>
+                        </div>
 
-                <!-- Tests -->
-                <div class="form-group col-md-4">
-                    <label>CPR Expiration Date</label>
-                    <input type="date" name="cpr_expiration_date" class="form-control" t-att-value="applicant.cpr_expiration_date"/>
+                        <!-- Refernce 4 -->
+                        <div class="form-group col-md-3">
+                            <label>Name</label>
+                            <input type="text" name="reference_name4" class="form-control" t-att-value="applicant.reference_name4"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Relationship</label>
+                            <input type="text" name="reference_rln4" class="form-control" t-att-value="applicant.reference_rln4"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Company</label>
+                            <input type="text" name="reference_cmpny4" class="form-control" t-att-value="applicant.reference_cmpny4"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Contact Number</label>
+                            <input type="text" name="reference_contact4" class="form-control" t-att-value="applicant.reference_contact4"/>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label>Last Physical Exam Date</label>
-                    <input type="date" name="last_physical_exam_date" class="form-control" t-att-value="applicant.last_physical_exam_date"/>
-                </div>
-                <div class="form-group col-md-4">
-                    <label>Last TB/Chest X-ray Date</label>
-                    <input type="date" name="last_xray_date" class="form-control" t-att-value="applicant.last_xray_date"/>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- References -->
-        <div class="card mb-4">
-            <div class="card-header">References (Please Provide Atleast 2 Professional References If Not Specified Above)</div>
-            <div class="card-body row">
-                <!-- Refernce 1 -->
-                <div class="form-group col-md-3">
-                    <label>Name</label>
-                    <input type="text" name="reference_name1" class="form-control" t-att-value="applicant.reference_name1"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Relationship</label>
-                    <input type="text" name="reference_rln1" class="form-control" t-att-value="applicant.reference_rln1"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Company</label>
-                    <input type="text" name="reference_cmpny1" class="form-control" t-att-value="applicant.reference_cmpny1"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Contact Number</label>
-                    <input type="text" name="reference_contact1" class="form-control" t-att-value="applicant.reference_contact1"/>
-                </div>
-
-                <!-- Refernce 2 -->
-                <div class="form-group col-md-3">
-                    <label>Name</label>
-                    <input type="text" name="reference_name2" class="form-control" t-att-value="applicant.reference_name2"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Relationship</label>
-                    <input type="text" name="reference_rln2" class="form-control" t-att-value="applicant.reference_rln2"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Company</label>
-                    <input type="text" name="reference_cmpny2" class="form-control" t-att-value="applicant.reference_cmpny2"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Contact Number</label>
-                    <input type="text" name="reference_contact2" class="form-control" t-att-value="applicant.reference_contact2"/>
-                </div>
-
-                <!-- Refernce 3 -->
-                <div class="form-group col-md-3">
-                    <label>Name</label>
-                    <input type="text" name="reference_name3" class="form-control" t-att-value="applicant.reference_name3"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Relationship</label>
-                    <input type="text" name="reference_rln3" class="form-control" t-att-value="applicant.reference_rln3"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Company</label>
-                    <input type="text" name="reference_cmpny3" class="form-control" t-att-value="applicant.reference_cmpny3"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Contact Number</label>
-                    <input type="text" name="reference_contact3" class="form-control" t-att-value="applicant.reference_contact3"/>
-                </div>
-
-                <!-- Refernce 4 -->
-                <div class="form-group col-md-3">
-                    <label>Name</label>
-                    <input type="text" name="reference_name4" class="form-control" t-att-value="applicant.reference_name4"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Relationship</label>
-                    <input type="text" name="reference_rln4" class="form-control" t-att-value="applicant.reference_rln4"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Company</label>
-                    <input type="text" name="reference_cmpny4" class="form-control" t-att-value="applicant.reference_cmpny4"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Contact Number</label>
-                    <input type="text" name="reference_contact4" class="form-control" t-att-value="applicant.reference_contact4"/>
-                </div>
-            </div>
-        </div>
 
                 <!-- General Information -->
-                <div class="card mb-4"> 
+                <div class="card mb-4">
                     <div class="card-header">General Information</div>
                     <div class="card-body row">
                         <t t-set="opts" t-value="[('yes', 'Yes'), ('no', 'No')]"/>
-
                         <!-- Q1 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>1. Are you eighteen (18) years old or older?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="age_validation" t-att-id="'age_validation_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.age_validation == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'age_validation_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'age_validation_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                         </div>
-
                         <!-- Q2 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>2. Have you ever been employed at Compassionate Home Health, LTD.?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="employed_home_health" t-att-id="'employed_home_health_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.employed_home_health == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'employed_home_health_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'employed_home_health_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                         </div>
-
                         <!-- Q3 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>3. Do you have available means of transportation with valid Auto Insurance?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="means_of_transportation" t-att-id="'transport_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.means_of_transportation == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'transport_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'transport_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                         </div>
-
                         <!-- Q4 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>4. Do you have a valid driver's license?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="driving_licens" t-att-id="'dl_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.driving_licens == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'dl_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'dl_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                             <div class="row mt-3">
@@ -626,14 +630,15 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Q5 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>5. Have you had your driver's license suspended or revoked in the last 3 years?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="driving_licens_revoke" t-att-id="'dl_revoke_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.driving_licens_revoke == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'dl_revoke_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'dl_revoke_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                             <div class="form-group mt-2">
@@ -641,14 +646,15 @@
                                 <input type="text" name="driving_license_revoke_reason" class="form-control" t-att-value="applicant.driving_license_revoke_reason"/>
                             </div>
                         </div>
-
                         <!-- Q6 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>6. Are you able to perform the job tasks without accommodation?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="task_without_accom" t-att-id="'accom_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.task_without_accom == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'accom_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'accom_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                             <div class="form-group mt-2">
@@ -656,25 +662,27 @@
                                 <input type="text" name="task_without_accom_reason" class="form-control" t-att-value="applicant.task_without_accom_reason"/>
                             </div>
                         </div>
-
                         <!-- Q7 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>7. Are you receiving or have pending application for compensation (e.g., pension, social security)?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="facility_from_state" t-att-id="'facility_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.facility_from_state == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'facility_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'facility_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                         </div>
-
                         <!-- Q8 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>8. Are you now or do you expect to be engaged in any other business or employment?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="other_business" t-att-id="'other_business_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.other_business == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'other_business_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'other_business_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                             <div class="form-group mt-2">
@@ -682,25 +690,27 @@
                                 <input type="text" name="other_business_reason" class="form-control" t-att-value="applicant.other_business_reason"/>
                             </div>
                         </div>
-
                         <!-- Q9 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>9. Are you an active military or applying for military service?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="military_service" t-att-id="'military_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.military_service == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'military_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'military_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                         </div>
-
                         <!-- Q10 -->
                         <div class="col-12 border-bottom pb-2 mb-4">
                             <label>10. Have you ever been convicted of any law violation (except a minor traffic violation)?</label>
                             <t t-foreach="opts" t-as="opt">
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="law_violation" t-att-id="'law_' + opt[0]" t-att-value="opt[0]" t-att-checked="applicant.law_violation == opt[0]"/>
-                                    <label class="form-check-label" t-att-for="'law_' + opt[0]"><t t-esc="opt[1]"/></label>
+                                    <label class="form-check-label" t-att-for="'law_' + opt[0]">
+                                        <t t-esc="opt[1]"/>
+                                    </label>
                                 </div>
                             </t>
                             <div class="form-group mt-2">
@@ -708,7 +718,6 @@
                                 <input type="text" name="law_violation_reason" class="form-control" t-att-value="applicant.law_violation_reason"/>
                             </div>
                         </div>
-
                         <!-- Q11 -->
                         <div class="col-12">
                             <label>11. How did you hear about Compassionate Home Health?</label>
@@ -720,29 +729,17 @@
                                 <option value="emp_ref" t-att-selected="applicant.hear_from == 'emp_ref'">Employee Referral</option>
                             </select>
                         </div>
-
-                        <!-- <div class="col-12" style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px;">
-                            <label style="font-size: 1.2rem; font-weight: bold; display: block; margin-bottom: 15px;">
-                                Applicant's Attestation Statement
-                            </label>
-                            <span style="font-size: 1rem; color: #333; display: inline-block; text-align: left; max-width: 800px; line-height: 1.6;">
-                                I hereby affirm that the information I have provided in this application are true and correct. I authorize investigation of all statements in this application for employment including references verification, written request for information from previous employer, requirement to supply birth certificate or other proof of authorization to work in the U.S., physical examination as may be necessary in arriving at an employment decision. In the event, I have misrepresented or omitted any fact on this application, and am subsequently hired, I am fully aware that I may be discharged from the job.
-                                I understand Compassionate Home Health, LTD. may require physical examination, fingerprinting or background check investigation and TB testing at any time and I agree to such procedures. I agree that the examining physician may disclose to Compassionate Home Health, LTD. or its representatives the results of such exams.<br></br><br></br>
-                                I hereby understand and acknowledge that, unless otherwise defined by the applicable law, any employment relationship with this organization is "AT WILL" in nature, which means that the Employer may discharge Employee at any time with or without cause. It is further understood that this "AT WILL" employment may not be changed by any written document or by conduct unless such change is specifically acknowledged in writing by an authorized officer in the organization.<br></br><br></br>
-                                In the event of employment, I understand that false or misleading information provided in my application or interview(s) may result in my immediate termination. I also understand that I am required to abide by all rules and regulations of the employer.
-                            </span>
-                        </div> -->
                     </div>
                 </div>
-
                 <!-- Signature -->
-
                 <div class="card mb-4">
                     <div class="card-header">Applicant's Attestation Statement</div>
-                    <p>
+                    <p style="padding-left: 20px; padding-right: 20px; text-align: justify;">
                         I hereby affirm that the information I have provided in this application are true and correct. I authorize investigation of all statements in this application for employment including references verification, written request for information from previous employer, requirement to supply birth certificate or other proof of authorization to work in the U.S., physical examination as may be necessary in arriving at an employment decision. In the event, I have misrepresented or omitted any fact on this application, and am subsequently hired, I am fully aware that I may be discharged from the job.
-                        I understand Compassionate Home Health, LTD. may require physical examination, fingerprinting or background check investigation and TB testing at any time and I agree to such procedures. I agree that the examining physician may disclose to Compassionate Home Health, LTD. or its representatives the results of such exams.<br></br><br></br>
-                        I hereby understand and acknowledge that, unless otherwise defined by the applicable law, any employment relationship with this organization is "AT WILL" in nature, which means that the Employer may discharge Employee at any time with or without cause. It is further understood that this "AT WILL" employment may not be changed by any written document or by conduct unless such change is specifically acknowledged in writing by an authorized officer in the organization.<br></br><br></br>
+                        I understand Compassionate Home Health, LTD. may require physical examination, fingerprinting or background check investigation and TB testing at any time and I agree to such procedures. I agree that the examining physician may disclose to Compassionate Home Health, LTD. or its representatives the results of such exams.<br></br>
+                        <br></br>
+                        I hereby understand and acknowledge that, unless otherwise defined by the applicable law, any employment relationship with this organization is "AT WILL" in nature, which means that the Employer may discharge Employee at any time with or without cause. It is further understood that this "AT WILL" employment may not be changed by any written document or by conduct unless such change is specifically acknowledged in writing by an authorized officer in the organization.<br></br>
+                        <br></br>
                         In the event of employment, I understand that false or misleading information provided in my application or interview(s) may result in my immediate termination. I also understand that I am required to abide by all rules and regulations of the employer.
                     </p>
                     <div class="card-header">Signature</div>

@@ -4,11 +4,9 @@ odoo.define("job_portal.job_portal", function (require) {
     var core = require("web.core");
     var odoo = require("web.ajax");
     var Dialog = require("web.Dialog");
-    var rpc = require("web.rpc");
     var _t = core._t;
     var ajax = require("web.ajax");
 
-    // For My profile page Models to create Applicant Details
     $(document).ready(function () {
         if ($(".post_active").val()) {
         $(".post-job-menu").css({ color: "rgba(0, 0, 0, 0.9)" });
@@ -49,20 +47,6 @@ odoo.define("job_portal.job_portal", function (require) {
         });
 
         $(".post_job_picker").change(function () {
-        //            var t=new Date()
-        //            var selected_date=new Date($(this).val())
-        //            var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-        //
-        //
-        //            if (t.getDate() > selected_date.getDate()){
-        //                alert("Please enter proper closing date")
-        //
-        //                $(this).val("")
-        //                return false
-        //            }
-        //
-        //            else{
-        //            }
         });
         $(".send-bio-data").click(function () {
         var flag = 0;
@@ -133,7 +117,6 @@ odoo.define("job_portal.job_portal", function (require) {
         });
         
         $(".birthdate-applicant").change(function () {
-        //            alert("change")
         var selected_date = new Date($(this).val());
         var curr_date = new Date();
         var diff = curr_date.getFullYear() - selected_date.getFullYear();
@@ -260,7 +243,6 @@ odoo.define("job_portal.job_portal", function (require) {
     });
 
     $(document).ready(function () {
-        // Listen for clicks on any close button or modal dismiss button
         $(document).on('click', '[data-dismiss="modal"], .modal .close', function () {
             $(this).closest('.modal').modal('hide');
         });
@@ -290,9 +272,15 @@ odoo.define("job_portal.job_portal", function (require) {
         $("#myModalAcademic").find("input,select,textarea").val("");
         });
 
-        /* affix the navbar after scroll below header */
-        // Click event For Adding Academic of Applicants
-        // Validation on the models can/should be improved later on
+        $(document).on("click", ".emergency_contact_btn", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $("#myModalEmergencyContact").modal('show');
+            $("#myModalEmergencyContact").find("h4[class='modal-title']").text(" Add Emergency Contact Details");
+            $("#myModalEmergencyContact").find("input[name='operation_type']").val("insert");
+            $("#myModalEmergencyContact").find("input,select,textarea").val("");
+            });
+
         $(document).on("click", "#add_academic", function (e) {
         var current_val = new Date();
         var target = $(this).parents("#myModalAcademic");
@@ -321,8 +309,7 @@ odoo.define("job_portal.job_portal", function (require) {
             $.trim(target.find("input[name='study_field']").val()) &&
             $.trim(target.find("input[name='organization']").val()) &&
             $.trim(target.find("input[name='location']").val()) &&
-            $.trim(target.find("input[name='start_date']").val()) &&
-            $.trim(target.find("input[name='grade']").val())
+            $.trim(target.find("input[name='start_date']").val())
             ) {
             if (
                 $("#myModalAcademic").find("input[name='is_still']").is(":checked")
@@ -432,7 +419,6 @@ odoo.define("job_portal.job_portal", function (require) {
                         " class='btn delete_academic'><i class='fa fa-trash'></i></button></td></tr>"
                     );
                     $("#myModalAcademic").modal("hide");
-                    //                    location.reload();\
                     $("#academic_desc_table").load(
                     window.location.href + " #academic_desc_table"
                     );
@@ -467,8 +453,7 @@ odoo.define("job_portal.job_portal", function (require) {
             $.trim(target.find("input[name='study_field']").val()) &&
             $.trim(target.find("input[name='organization']").val()) &&
             $.trim(target.find("input[name='location']").val()) &&
-            $.trim(target.find("input[name='start_date']").val()) &&
-            $.trim(target.find("input[name='grade']").val())
+            $.trim(target.find("input[name='start_date']").val())
             ) {
             if (
                 $("#myModalAcademic").find("input[name='is_still']").is(":checked")
@@ -515,7 +500,6 @@ odoo.define("job_portal.job_portal", function (require) {
                         " class='btn delete_academic'><i class='fa fa-trash'></i></button></td></tr>"
                     );
                     $("#myModalAcademic").modal("hide");
-                    //                    location.reload();
                     $("#academic_desc_table").load(
                     window.location.href + " #academic_desc_table"
                     );
@@ -563,7 +547,6 @@ odoo.define("job_portal.job_portal", function (require) {
                         " class='btn delete_academic'><i class='fa fa-trash'></i></button></td></tr>"
                     );
                     $("#myModalAcademic").modal("hide");
-                    //location.reload();
                     $("#academic_desc_table").load(
                     window.location.href + " #academic_desc_table"
                     );
@@ -582,7 +565,6 @@ odoo.define("job_portal.job_portal", function (require) {
         }
         });
 
-        // Click event For Deleting existing Academic Detail of Applicants
         $(document).on("click", ".delete_academic", function (e) {
         var ele = $(this);
         e.stopPropagation();
@@ -594,11 +576,9 @@ odoo.define("job_portal.job_portal", function (require) {
             })
             .then(function (rec) {
             ele.closest("tr").remove();
-            //               location.reload();
             });
         });
 
-        // Get formatted date YYYY-MM-DD
         function getFormattedDate(date) {
         return (
             date.getFullYear() +
@@ -609,7 +589,6 @@ odoo.define("job_portal.job_portal", function (require) {
         );
         }
 
-        // Click event For Editing existing Academic Detail of Applicants
         $(document).on("click", ".edit_academic", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -667,25 +646,8 @@ odoo.define("job_portal.job_portal", function (require) {
             $("#myModalAcademic").find(".end_date_div").hide();
         }
 
-        //            $('#myModalAcademic').find('')
-        //
-        //             odoo.jsonRpc("/edit_academic_applicant", 'call', {
-        //                    'qualification' : target.find("input[name='qualification']").val(),
-        //                    'study_field' : target.find("input[name='study_field']").val(),
-        //                    'organization' : target.find("input[name='organization']").val(),
-        //                    'location' : target.find("input[name='location']").val(),
-        //                    'start_date' : target.find("input[name='start_date']").val(),
-        //                    'end_date' : target.find("input[name='end_date']").val(),
-        //                    'grade' : target.find("input[name='grade']").val(),
-        //                    'id' : id
-        //                }).then(function() {
-        //                    location.reload();
-        //                });
-        //
         });
 
-        // Click event For Editing existing exeperience Detail of Applicants
-        // Validation on the models can/should be improved later on
         $(document).on("click", "#add_experience", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -717,10 +679,7 @@ odoo.define("job_portal.job_portal", function (require) {
             $.trim(target.find("input[name='organization']").val()) &&
             $.trim(target.find("input[name='location']").val()) &&
             $.trim(target.find("input[name='start_date']").val()) &&
-            // $.trim(target.find("input[name='contact_referee']").val()) &&
             $.trim(target.find("input[name='description']").val())
-            // $.trim(target.find("input[name='position_referee']").val()) &&
-            // $.trim(target.find("input[name='name_referee']").val())
             ) {
             if (
                 $("#myModalExperience")
@@ -732,16 +691,9 @@ odoo.define("job_portal.job_portal", function (require) {
                 var location = target.find("input[name='location']").val();
                 var start_date = target.find("input[name='start_date']").val();
                 var is_still = true;
-                //  var contact_referee = target.find("input[name='contact_referee']").val()
                 var description = target.find("input[name='description']").val();
-                //  var position_referee = target.find("input[name='position_referee']").val()
-                //  var name_referee = target.find("input[name='name_referee']").val()
-                //  var notice_period = target.find("select.notice_period").val()
                 var type = target.find("select.type").val();
                 var tr_no = parseInt(target.find("input[name='tr_no']").val()) + 1;
-
-                //                     alert(tr_no,$('.exp_desc_table tr').length)
-
                 if ($(".exp_desc_table tr").length == 2) {
                 tr_no = 1;
                 }
@@ -752,32 +704,11 @@ odoo.define("job_portal.job_portal", function (require) {
                     location: target.find("input[name='location']").val(),
                     start_date: target.find("input[name='start_date']").val(),
                     is_still: true,
-                    // 'contact_referee' : target.find("input[name='contact_referee']").val(),
                     description: target.find("input[name='description']").val(),
-                    // 'position_referee' : target.find("input[name='position_referee']").val(),
-                    // 'name_referee' : target.find("input[name='name_referee']").val(),
-                    // 'notice_period' : target.find("select.notice_period").val(),
                     type: target.find("select.type").val(),
                     id: target.find("input[name='opr_id']").val(),
                 })
                 .then(function (rec) {
-                    // if(target.find("input[name='contact_referee']").val()==''){
-                    //  target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //  alert("Please enter reference contact")
-                    //  return false
-
-                    // }
-                    //   else if(target.find("input[name='contact_referee']").val().match('^\d+$/')){
-                    //        target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //      alert("Please enter reference properly")
-                    //      return false
-                    //     }
-                    //              else if($('.mobile-applicant').val()<0){
-                    //      target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //          alert("Please enter reference properly")
-                    //          return false
-                    //  }
-
                     $(".exp_desc_table tr:eq(" + $.trim(tr_no) + ")").replaceWith(
                     "<tr><td>" +
                         $.trim(job_position) +
@@ -810,13 +741,8 @@ odoo.define("job_portal.job_portal", function (require) {
                 var location = target.find("input[name='location']").val();
                 var start_date = target.find("input[name='start_date']").val();
                 var end_date = target.find("input[name='end_date']").val();
-                //  var contact_referee = target.find("input[name='contact_referee']").val()
                 var description = target.find("input[name='description']").val();
-                //  var position_referee = target.find("input[name='position_referee']").val()
-                //  var name_referee = target.find("input[name='name_referee']").val()
-                //  var notice_period = target.find("select.notice_period").val()
                 var type = target.find("select.type").val();
-                //                     var tr_no=target.find("input[name='tr_no']").val()
                 var tr_no = parseInt(target.find("input[name='tr_no']").val()) + 1;
                 if ($(".exp_desc_table tr").length == 2) {
                 tr_no = 1;
@@ -828,31 +754,11 @@ odoo.define("job_portal.job_portal", function (require) {
                     location: target.find("input[name='location']").val(),
                     start_date: target.find("input[name='start_date']").val(),
                     end_date: target.find("input[name='end_date']").val(),
-                    // 'contact_referee' : target.find("input[name='contact_referee']").val(),
                     description: target.find("input[name='description']").val(),
-                    // 'position_referee' : target.find("input[name='position_referee']").val(),
-                    // 'name_referee' : target.find("input[name='name_referee']").val(),
-                    // 'notice_period' : target.find("select.notice_period").val(),
                     type: target.find("select.type").val(),
                     id: target.find("input[name='opr_id']").val(),
                 })
                 .then(function (rec) {
-                    //         if(target.find("input[name='contact_referee']").val()==''){
-                    //      target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //      alert("Please enter reference contact")
-                    //      return false
-
-                    // }
-                    //   else if(target.find("input[name='contact_referee']").val().match('^\d+$/')){
-                    //        target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //      alert("Please enter reference properly")
-                    //      return false
-                    //     }
-                    //              else if($('.mobile-applicant').val()<0){
-                    //      target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //          alert("Please enter reference properly")
-                    //          return false
-                    //  }
                     $(".exp_desc_table tr:eq(" + $.trim(tr_no) + ")").replaceWith(
                     "<tr><td>" +
                         $.trim(job_position) +
@@ -874,7 +780,6 @@ odoo.define("job_portal.job_portal", function (require) {
                         rec +
                         " class='btn delete_experience'><i class='fa fa-trash'></i></button></td></tr>"
                     );
-
                     $("#myModalExperience").modal("hide");
                     $("#exp_desc_table").load(
                     window.location.href + " #exp_desc_table"
@@ -916,11 +821,7 @@ odoo.define("job_portal.job_portal", function (require) {
             $.trim(target.find("input[name='organization']").val()) &&
             $.trim(target.find("input[name='location']").val()) &&
             $.trim(target.find("input[name='start_date']").val()) &&
-            // $.trim(target.find("input[name='contact_referee']").val()) &&
             $.trim(target.find("input[name='description']").val()) &&
-            // $.trim(target.find("input[name='position_referee']").val()) &&
-            // $.trim(target.find("input[name='name_referee']").val()) &&
-            // $.trim(target.find("select.notice_period").val()) &&
             $.trim(target.find("select.type").val())
             ) {
             if (
@@ -933,11 +834,7 @@ odoo.define("job_portal.job_portal", function (require) {
                 var location = target.find("input[name='location']").val();
                 var start_date = target.find("input[name='start_date']").val();
                 var is_still = true;
-                //  var contact_referee = target.find("input[name='contact_referee']").val()
                 var description = target.find("input[name='description']").val();
-                //  var position_referee = target.find("input[name='position_referee']").val()
-                //  var name_referee = target.find("input[name='name_referee']").val()
-                //  var notice_period = target.find("select.notice_period").val()
                 var type = target.find("select.type").val();
                 odoo
                 .jsonRpc("/add_experience", "call", {
@@ -946,31 +843,10 @@ odoo.define("job_portal.job_portal", function (require) {
                     location: target.find("input[name='location']").val(),
                     start_date: target.find("input[name='start_date']").val(),
                     is_still: true,
-                    // 'contact_referee' : target.find("input[name='contact_referee']").val(),
                     description: target.find("input[name='description']").val(),
-                    // 'position_referee' : target.find("input[name='position_referee']").val(),
-                    // 'name_referee' : target.find("input[name='name_referee']").val(),
-                    // 'notice_period' : target.find("select.notice_period").val(),
                     type: target.find("select.type").val(),
                 })
                 .then(function (rec) {
-                    //               if(target.find("input[name='contact_referee']").val()==''){
-                    //      target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //      alert("Please enter reference contact")
-                    //      return false
-
-                    // }
-                    //   else if(target.find("input[name='contact_referee']").val().match('^\d+$/')){
-                    //        target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //      alert("Please enter reference properly")
-                    //      return false
-                    //     }
-                    //              else if($('.mobile-applicant').val()<0){
-                    //      target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //          alert("Please enter reference properly")
-                    //          return false
-                    //  }
-
                     $(".exp_desc_table tr:last").after(
                     "<tr><td>" +
                         $.trim(job_position) +
@@ -993,7 +869,6 @@ odoo.define("job_portal.job_portal", function (require) {
                         " class='btn delete_experience'><i class='fa fa-trash'></i></button></td></tr>"
                     );
                     $("#myModalExperience").modal("hide");
-                    //                        location.reload();
                     $("#exp_desc_table").load(
                     window.location.href + " #exp_desc_table"
                     );
@@ -1004,11 +879,7 @@ odoo.define("job_portal.job_portal", function (require) {
                 var location = target.find("input[name='location']").val();
                 var start_date = target.find("input[name='start_date']").val();
                 var end_date = target.find("input[name='end_date']").val();
-                //  var contact_referee = target.find("input[name='contact_referee']").val()
                 var description = target.find("input[name='description']").val();
-                //  var position_referee = target.find("input[name='position_referee']").val()
-                //  var name_referee = target.find("input[name='name_referee']").val()
-                //  var notice_period = target.find("select.notice_period").val()
                 var type = target.find("select.type").val();
                 odoo
                 .jsonRpc("/add_experience", "call", {
@@ -1017,31 +888,10 @@ odoo.define("job_portal.job_portal", function (require) {
                     location: target.find("input[name='location']").val(),
                     start_date: target.find("input[name='start_date']").val(),
                     end_date: target.find("input[name='end_date']").val(),
-                    // 'contact_referee' : target.find("input[name='contact_referee']").val(),
                     description: target.find("input[name='description']").val(),
-                    // 'position_referee' : target.find("input[name='position_referee']").val(),
-                    // 'name_referee' : target.find("input[name='name_referee']").val(),
-                    // 'notice_period' : target.find("select.notice_period").val(),
                     type: target.find("select.type").val(),
                 })
                 .then(function (rec) {
-                    //               if(target.find("input[name='contact_referee']").val()==''){
-                    //      target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //      alert("Please enter reference contact")
-                    //      return false
-
-                    // }
-                    //   else if(target.find("input[name='contact_referee']").val().match('^\d+$/')){
-                    //        target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //      alert("Please enter reference properly")
-                    //      return false
-                    //     }
-                    //          else if($('.mobile-applicant').val()<0){
-                    //  target.find("input[name='contact_referee']").css({'border':'1px solid red'})
-                    //      alert("Please enter reference properly")
-                    //      return false
-                    //     }
-
                     $(".exp_desc_table tr:last").after(
                     "<tr><td>" +
                         $.trim(job_position) +
@@ -1081,7 +931,6 @@ odoo.define("job_portal.job_portal", function (require) {
         }
         });
 
-        // Click event For Deleting existing exeperience Detail of Applicants
         $(document).on("click", ".delete_experience", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -1096,7 +945,6 @@ odoo.define("job_portal.job_portal", function (require) {
             });
         });
 
-        // Click event For Editing existing exeperience Detail of Applicants
         $(document).on("click", ".edit_experience", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -1133,9 +981,6 @@ odoo.define("job_portal.job_portal", function (require) {
         $("#myModalExperience")
             .find("input[name='description']")
             .val($.trim($(this).closest("tr").find("td:eq(5)").text()));
-        // $('#myModalExperience').find("input[name='name_referee']").val($.trim($(this).closest("tr").find('td:eq(7)').text()))
-        // $('#myModalExperience').find("input[name='position_referee']").val($.trim($(this).closest("tr").find('td:eq(8)').text()))
-        // $('#myModalExperience').find("input[name='contact_referee']").val($.trim($(this).closest("tr").find('td:eq(9)').text()))
         $("#myModalExperience")
             .find("input[name='select.type']")
             .val($.trim($(this).closest("tr").find("td:eq(7)").text()));
@@ -1465,7 +1310,6 @@ odoo.define("job_portal.job_portal", function (require) {
         }
         });
 
-        // Click event For Deleting Certifications of the Applicants if Needed
         $(document).on("click", ".delete_certificate", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -1480,7 +1324,6 @@ odoo.define("job_portal.job_portal", function (require) {
             });
         });
 
-        // Click event For Editing Certifications of the Applicants if Needed
         $(document).on("click", ".edit_certificate", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -1545,7 +1388,6 @@ odoo.define("job_portal.job_portal", function (require) {
         }
         });
 
-        // Click event For Adding Job Benefits  by Employers
         $(document).on("click", "#add_benefits", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -1554,7 +1396,6 @@ odoo.define("job_portal.job_portal", function (require) {
             title: _t("Alert!"),
             });
         } else {
-            //                $(this).hide();
             odoo
             .jsonRpc("/add_benefits", "call", {
                 job_id: $("input[name='job_id']").val(),
@@ -1589,7 +1430,6 @@ odoo.define("job_portal.job_portal", function (require) {
         }
         });
 
-        // Click event For Adding Job Requirements  by Employers
         $(document).on("click", "#add_job_requirements", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -1602,7 +1442,6 @@ odoo.define("job_portal.job_portal", function (require) {
             }
             );
         } else {
-            //                $(this).hide();
             odoo
             .jsonRpc("/add_job_requirements", "call", {
                 job_id: $("input[name='job_id']").val(),
@@ -1637,7 +1476,6 @@ odoo.define("job_portal.job_portal", function (require) {
         }
         });
 
-        // Click event For Adding Job Location  by Employers
         $(document).on("click", "#add_job_location", function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -1646,7 +1484,6 @@ odoo.define("job_portal.job_portal", function (require) {
             title: _t("Alert!"),
             });
         } else {
-            //                $(this).hide();
             odoo
             .jsonRpc("/add_job_location", "call", {
                 job_id: $("input[name='job_id']").val(),
@@ -1662,7 +1499,6 @@ odoo.define("job_portal.job_portal", function (require) {
                     ),
                     {
                     confirm_callback: function () {
-                        //                                location.reload();
                     },
                     title: _t("Success!"),
                     }
@@ -1683,7 +1519,6 @@ odoo.define("job_portal.job_portal", function (require) {
         }
         });
 
-        // For Industry Practices Static Page JS
         $("div.bhoechie-tab-menu>div.list-group>a").click(function (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -1696,4 +1531,145 @@ odoo.define("job_portal.job_portal", function (require) {
             .addClass("active");
         });
     });
+
+    $(document).on("click", "#add_emergency_contact_id", function (e) {
+        var target = $(this).parents("#myModalEmergencyContact");
+        e.stopPropagation();
+        e.preventDefault();
+        if (target.find("input[name='operation_type']").val() == "update") {
+            if (
+            $.trim(target.find("input[name='name']").val()) &&
+            $.trim(target.find("input[name='relation']").val()) &&
+            $.trim(target.find("input[name='phone']").val())
+            ) {
+                var name = target.find("input[name='name']").val();
+                var relation = target.find("input[name='relation']").val();
+                var phone = target.find("input[name='phone']").val();
+                var tr_no = parseInt(target.find("input[name='tr_no']").val()) + 1;
+                if ($(".emergency_contact_table tr").length == 2) {
+                tr_no = 1;
+                }
+                odoo.jsonRpc("/edit_emergency_contact", "call", {
+                    name: target.find("input[name='name']").val(),
+                    relation: target.find("input[name='relation']").val(),
+                    phone: target.find("input[name='phone']").val(),
+                    id: target.find("input[name='opr_id']").val(),
+                })
+                .then(function (rec) {
+                    $(
+                    ".emergency_contact_table tr:eq(" + $.trim(tr_no) + ")"
+                    ).replaceWith(
+                    "<tr><td>" +
+                        $.trim(name) +
+                        "</td><td>" +
+                        $.trim(relation) +
+                        "</td><td>" +
+                        $.trim(phone) +
+                        "</td><td><button type='button' class='btn edit_emergency_contact_id' data-toggle='modal' data-emergency_contact_id=" +
+                        rec +
+                        "><i class='fa fa-pencil-square-o'></i></button><td><button type='button' data-emergency_contact_id=" +
+                        rec +
+                        " class='btn delete_academic'><i class='fa fa-trash'></i></button></td></tr>"
+                    );
+                    $("#myModalEmergencyContact").modal("hide");
+                    $("#emergency_contact_table").load(
+                    window.location.href + " #emergency_contact_table"
+                    );
+                });
+            } else {
+            Dialog.alert(
+                self,
+                _t("Please Give Proper Values to the Input fields !"),
+                {
+                title: _t("Alert!"),
+                }
+            );
+            }
+        } else if (
+            $.trim(target.find("input[name='operation_type']").val() == "insert")
+        ) {
+            if (
+                $.trim(target.find("input[name='name']").val()) &&
+                $.trim(target.find("input[name='relation']").val()) &&
+                $.trim(target.find("input[name='phone']").val())
+            ) {
+                var name = target.find("input[name='name']").val();
+                var relation = target.find("input[name='relation']").val();
+                var phone = target.find("input[name='phone']").val();
+                odoo.jsonRpc("/add_emergency_contact", "call", {
+                    name: target.find("input[name='name']").val(),
+                    relation: target.find("input[name='relation']").val(),
+                    phone: target.find("input[name='phone']").val(),
+                })
+                .then(function (rec) {
+                    $(
+                    ".emergency_contact_table tr:eq(" + $.trim(tr_no) + ")"
+                    ).replaceWith(
+                    "<tr><td>" +
+                        $.trim(name) +
+                        "</td><td>" +
+                        $.trim(relation) +
+                        "</td><td>" +
+                        $.trim(phone) +
+                        "</td><td><button type='button' class='btn edit_emergency_contact_id' data-toggle='modal' data-emergency_contact_id=" +
+                        rec +
+                        "><i class='fa fa-pencil-square-o'></i></button><td><button type='button' data-emergency_contact_id=" +
+                        rec +
+                        " class='btn delete_academic'><i class='fa fa-trash'></i></button></td></tr>"
+                    );
+                    $("#myModalEmergencyContact").modal("hide");
+                    $("#emergency_contact_table").load(
+                    window.location.href + " #emergency_contact_table"
+                    );
+                });
+            } else {
+            Dialog.alert(
+                self,
+                _t("Please Give Proper Values to the Input fields !"),
+                {
+                title: _t("Alert!"),
+                }
+            );
+            }
+        } else {
+        }
+        });
+
+        $(document).on("click", ".delete_emergency_contact_id", function (e) {
+        var ele = $(this);
+        e.stopPropagation();
+        e.preventDefault();
+        var id = parseInt($(this).data("emergency_contact_id"));
+        odoo
+            .jsonRpc("/delete_emergency_contact", "call", {
+            id: id,
+            })
+            .then(function (rec) {
+            ele.closest("tr").remove();
+            });
+        });
+
+        $(document).on("click", ".edit_emergency_contact_id", function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var id = $(this).data("emergency_contact_id");
+        $("#myModalEmergencyContact").modal('show');
+        $("#myModalEmergencyContact")
+            .find("h4[class='modal-title']")
+            .text("Update Emergency Contact Details");
+
+        $("#myModalEmergencyContact")
+            .find("input[name='name']")
+            .val($.trim($(this).closest("tr").find("td:eq(0)").text()));
+        $("#myModalEmergencyContact")
+            .find("input[name='relation']")
+            .val($.trim($(this).closest("tr").find("td:eq(1)").text()));
+        $("#myModalEmergencyContact")
+            .find("input[name='phone']")
+        $("#myModalEmergencyContact").find("input[name='operation_type']").val("update");
+        $("#myModalEmergencyContact").find("input[name='opr_id']").val(id);
+        $("#myModalEmergencyContact")
+            .find("input[name='tr_no']")
+            .val($.trim($(this).closest("tr").index()));
+        });
 });

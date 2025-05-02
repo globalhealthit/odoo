@@ -191,10 +191,77 @@
                         </div>
                         <section class="s_faq_collapse pt48 pb32">
                             <div class="container">
-
                                 <div class="row s_col_no_bgcolor">
                                     <div class="col-lg-12 pt16 pb16">
                                         <div id="myCollapse" class="accordion" role="tablist">
+                                            <div class="card bg-white">
+                                                <a href="#" role="tab" data-toggle="collapse" aria-expanded="true" class="card-header o_default_snippet_text" data-parent="#myCollapse" data-target="#myCollapseTab1549624727361">Emergency Contacts
+                                                </a>
+                                                <div class="collapse show" role="tabpanel" id="myCollapseTab1549624727361">
+                                                    <div class="card-body">
+                                                        <div class="row mt32 mb32">
+                                                            <div class="col-lg-12">
+                                                                <div class="">
+                                                                    <div id="home" class="">
+                                                                        <div>
+                                                                            <button class="academic_btn btn btn-primary pull-right">
+                                                                                Add More
+                                                                            </button>
+                                                                        </div>
+                                                                        <p>Add your Emergency Contacts Here.
+                                                                        </p>
+                                                                        <table id="emergency_contact_table" class="emergency_contact_table table table-responsive mt32 mb32">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col">Name</th>
+                                                                                    <th scope="col">Relationship</th>
+                                                                                    <th scope="col">Phone</th>
+                                                                                    <th>
+                                                                                        <button class="btn" type="button" disabled="disabled">
+                                                                                            <i class="fa fa-pencil-square-o"></i>
+                                                                                        </button>
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        <button class="btn" type="button" disabled="disabled">
+                                                                                            <i class="fa fa-trash"></i>
+                                                                                        </button>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr t-foreach="partner.emergency_contact_ids" t-as="emergency_contact_id">
+                                                                                    <td>
+                                                                                        <t t-esc="emergency_contact_id.name"/>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <t t-esc="emergency_contact_id.relation"/>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <t t-esc="emergency_contact_id.phone"/>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <button type="button" class="btn edit_emergency_contact_id" data-toggle="modal" t-att-data-emergency_contact_id="emergency_contact_id.id">
+                                                                                            <i class="fa fa-pencil-square-o"></i>
+                                                                                        </button>
+
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <button type="button" t-att-data-emergency_contact_id="emergency_contact_id.id" class="btn delete_emergency_contact_id">
+                                                                                            <i class="fa fa-trash"></i>
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <t t-call="job_portal.job_portal_my_emergency_contacts"></t>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="card bg-white">
                                                 <a href="#" role="tab" data-toggle="collapse" aria-expanded="true" class="card-header o_default_snippet_text" data-parent="#myCollapse" data-target="#myCollapseTab1549624727365">Academic Experiences
                                                 </a>
@@ -279,7 +346,7 @@
                                                                                 </tr>
                                                                             </tbody>
                                                                         </table>
-
+                                                                        <t t-call="job_portal.job_portal_my_academic_details"></t>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -358,8 +425,6 @@
                                                                                     <td>
                                                                                         <t t-esc="experience_id.description"/>
                                                                                     </td>
-
-
                                                                                     <td>
                                                                                         <t t-if="experience_id.type == 'full_time'">
                                                                                             <span>Full Time
@@ -400,11 +465,6 @@
                                                                                                                                 <i class="fa fa-asterisk color_red" aria-hidden="true"></i>
                                                                                                                                 Institution
                                                                                                                             </label>
-                                                                                                                            <!--                                                                                                                            <input type="text"-->
-                                                                                                                            <!-- name="organization"-->
-                                                                                                                            <!-- class="form-control"-->
-                                                                                                                            <!-- t-att-value="experience_id.organization"-->
-                                                                                                                            <!--                                                                                                                            />-->
                                                                                                                         </div>
                                                                                                                         <div class="form-group col-lg-6">
                                                                                                                             <label for="">
@@ -615,12 +675,6 @@
                                                                                                                             <i class="fa fa-asterisk color_red" aria-hidden="true"></i>
                                                                                                                             Institution
                                                                                                                         </label>
-                                                                                                                        <!--                                                                                                                        <input type="text"-->
-                                                                                                                        <!-- name="organization"-->
-                                                                                                                        <!-- class="form-control"-->
-                                                                                                                        <!-- t-if="certification_id"-->
-                                                                                                                        <!-- t-att-value="certification_id.organization"-->
-                                                                                                                        <!--                                                                                                                        />-->
                                                                                                                     </div>
                                                                                                                     <div class="form-group col-lg-6">
                                                                                                                         <label for="">
@@ -723,8 +777,6 @@
                                 </div>
                             </div>
                         </section>
-
-
                         <div class="clearfix">
                             <button type="submit" class="btn btn-primary pull-right mb32 ">
                                 Confirm
@@ -734,10 +786,70 @@
                     </div>
                 </div>
             </form>
-            <t t-call="job_portal.job_portal_my_academic_details"></t>
         </xpath>
-
     </template>
+
+    <template id="job_portal_my_emergency_contacts">
+        <div id="myModalEmergencyContact" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-full-height">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Add Emergency Contact Details
+                        </h4>
+                        <button type="button" class="btn btn-default close" data-dismiss="modal">x</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Modal Body -->
+                        <div class="container-fluid">
+                            <div class="row panel panel-default">
+                                <div class="col-lg-12 panel-body">
+                                    <div id="infoEducation1">
+                                        <div class="row infoEducationGroup1">
+                                            <div class="form-group col-lg-6">
+                                                <label for="">
+                                                    <i class="fa fa-asterisk color_red" aria-hidden="true"></i>
+                                                    Name
+                                                </label>
+                                                <input type="text" name="name" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="">
+                                                    <i class="fa fa-asterisk color_red" aria-hidden="true"></i>
+                                                    Relationship
+                                                </label>
+                                                <input type="text" name="relation" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label for="">
+                                                    <i class="fa fa-asterisk color_red" aria-hidden="true"></i>
+                                                    Phone
+                                                </label>
+                                                <input type="text" name="phone" class="form-control"/>
+                                                <input type="hidden" name="operation_type"/>
+                                                <input type="hidden" name="opr_id"/>
+                                                <input type="hidden" name="tr_no"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="add_emergency_contact_id" class="btn btn-primary save_data">
+                            Save
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
     <template id="job_portal_my_academic_details">
         <div id="myModalAcademic" class="modal fade" role="dialog">
             <div class="modal-dialog modal-full-height">
@@ -958,11 +1070,8 @@
         <div class="form-group col-lg-6">
             <label for="">Start Date</label>
             <div class="date">
-
                 <div class="input-group input-append date" id="datePicker_start">
-                    <div class="input-group-addon" style="background: lightgrey;
-    font-size: 16px;
-    padding: 5px;">
+                    <div class="input-group-addon" style="background: lightgrey; font-size: 16px; padding: 5px;">
                         <span class="input-group-addon add-on">
                             <span class="input-group-addon add-on">
                                 <span class="fa fa-calendar"></span>
@@ -976,15 +1085,16 @@
         </div>
         <div class="form-group col-lg-6">
             <label for="">Present</label>
-            <input type="checkbox" name="is_still" id="is_still" class="form-control"/>
+            <div class="form-check">
+                <input type="checkbox" name="is_still" id="is_still" class="form-check-input"/>
+            </div>
         </div>
+
         <div class="form-group end_date_div col-lg-6">
             <label for="">End Date</label>
             <div class="date">
                 <div class="input-group input-append date" id="datePicker_end">
-                    <div class="input-group-addon" style="background: lightgrey;
-    font-size: 16px;
-    padding: 5px;">
+                    <div class="input-group-addon" style="background: lightgrey; font-size: 16px; padding: 5px;">
                         <span class="input-group-addon add-on">
                             <span class="fa fa-calendar"></span>
                         </span>
@@ -995,5 +1105,6 @@
             </div>
         </div>
     </template>
+
 
 </odoo>

@@ -18,6 +18,7 @@ class ResPartnerPortal(models.Model):
     certification_ids = fields.One2many('hr.certification', 'partner_id',
                                         'Certifications',
                                         help="Certifications")
+    emergency_contact_ids = fields.One2many('emergency.contact', 'partner_id', 'Emergency Contact', help="Emergency Contact")
 
     def write(self, values):
         reserved_fields = [ 'location',

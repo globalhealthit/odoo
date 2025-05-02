@@ -66,7 +66,6 @@ class HrJob(models.Model):
     @api.model 
     def create(self,vals):
         user = vals.get('user_id')
-        _logger.info("==============user====id====%s",user)
         if user == 2:
             raise UserError(
                         _(
@@ -99,7 +98,6 @@ class HrJob(models.Model):
                         'req_name' : rec.user_id.partner_id.name,
                         'req_phone' : phone  + " ," + mobile,
                         })
-                    _logger.info("------desc---%s",res)
             return res
     def get_jb_url(self):
         for rec in self:
@@ -112,7 +110,7 @@ class HrJob(models.Model):
             today = date.today()
             if today >= self.closing_date:
                 raise ValidationError("Closing date should be greater than"
-                                      " Current Date.")
+                                    " Current Date.")
 
 class HrMySkills(models.Model):
     _name = "hr.my.skills"

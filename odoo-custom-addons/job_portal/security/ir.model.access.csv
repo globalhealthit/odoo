@@ -1,10 +1,14 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_hr_job_applicant,hr.applicant.public,hr_recruitment.model_hr_applicant,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_curriculum,access_hr_curriculum,job_portal.model_hr_curriculum,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_emergency_contact,access.emergency.contact,model_emergency_contact,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
 access_hr_academic,access.hr.academic,model_hr_academic,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
 access_hr_experience,access_hr_experience,model_hr_experience,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
 access_hr_certification,access_hr_certification,model_hr_certification,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
 access_hr_job_applicant_public,hr.applicant.public.public,hr_recruitment.model_hr_applicant,,1,0,0,0
+access_hr_curriculum_public,access_hr_curriculum_public,job_portal.model_hr_curriculum,,1,0,0,0
 access_hr_academic_public,access.hr.academic.public,model_hr_academic,,1,0,0,0
+access_emergency_contact_public,access.emergency.contact.public,model_emergency_contact,,1,0,0,0
 access_hr_experience_public,access_hr_experience.public,model_hr_experience,,1,0,0,0
 access_hr_certification_public,access_hr_certification.public,model_hr_certification,,1,0,0,0
 access_hr_job_children,access_hr_job_children,model_hr_employee_children,,1,0,0,0

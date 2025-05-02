@@ -5,220 +5,72 @@
             <field name="model">hr.applicant</field>
             <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
             <field name="arch" type="xml">
+
+                <!-- Update partner field label -->
                 <field name="partner_id" position="attributes">
                     <attribute name="string">Applicant</attribute>
                 </field>
 
-                <field name="description" position="before">
-                    <notebook>
-                        <page string="Personal Info">
-                            <group>
-
-                                <group string=" Address"
-                                      >
-                                    <field name="street_ht"
-                                           />
-                                    <field name="street2_ht"/>
-                                    <field name="city_ht"
-                                           />
-                                    <field name="zip_ht"
-                                           />
-                                    <field name="state_id_ht"
-                                           />
-
-
-                                </group>
-
-                                <group string="Status">
-                                    <field name="gender" required="True"/>
-                                    <field name="marital" required="True"/>
-                                </group>
-                                <group string="Birth">
-                                    <field name="birthday" required="True"/>
-                                </group>
-
-                            </group>
-                        </page>
-
-                        <page string="Academic Experiences"
-                              groups="base.group_user,base.group_hr_user">
-                            <field name="academic_ids"
-                                   context="{'default_employee_id': active_id}">
-                                <tree string="Academic Experiences">
-                                    <field name="name" string="Qualification"/>
-                                    <field name="study_field"/>
-                                    <field name="organization"
-                                           string="Institution"/>
-                                    <field name="location"/>
-                                    <field name="start_date"/>
-                                    <field name="end_date"/>
-                                    <field name="grade"/>
-                                </tree>
-                                <form string="Academic Experience">
-                                    <group>
-                                        <group name="main">
-                                            <field name="name"
-                                                   string="Qualification"/>
-                                            <field name="study_field"/>
-                                            <field name="start_date"/>
-                                            <field name="is_still"
-                                                   string="Present"/>
-                                            <field name="end_date"
-                                                   attrs="{'invisible':[('is_still', '=', True)]}"/>
-                                            <field name="grade"/>
-                                        </group>
-                                        <group>
-                                            <field name="organization"
-                                                   string="Institution"/>
-                                            <field name="location"/>
-                                        </group>
-                                    </group>
-                                    <separator string="Activities"
-                                               colspan="4"/>
-                                    <field name="activities"/>
-                                    <separator string="Description"
-                                               colspan="4"/>
-                                    <field name="description" colspan="4"
-                                           nolabel="1"/>
-                                </form>
-                            </field>
-                        </page>
-
-                        <page string="Professional Experiences"
-                              groups="base.group_user,base.group_hr_user">
-                            <field name="experience_ids"
-                                   context="{'default_applicant_id': active_id}">
-                                <tree string="Professional Experiences">
-                                    <field name="name" string="Position"/>
-                                    <field name="organization"
-                                           string="Employer"/>
-                                    <field name="start_date"/>
-                                    <field name="end_date"/>
-                                </tree>
-                                <form string="Professional Experience">
-                                    <group>
-                                        <group name="main">
-                                            <field name="name"
-                                                   string="Position"/>
-                                            <field name="organization"
-                                                   string="Employer"/>
-                                            <field name="location"/>
-                                            <field name="type"
-                                                   string="Work Type"/>
-                                        </group>
-                                        <group>
-                                            <field name="start_date"/>
-                                            <field name="is_still"
-                                                   string="Present"/>
-                                            <field name="end_date"
-                                                   attrs="{'invisible':[('is_still', '=', True)]}"/>
-                                            
-                                        </group>
-                            
-                                    </group>
-                                    <separator string="Description"
-                                               colspan="4"/>
-                                    <field name="description" colspan="4"
-                                           nolabel="1"/>
-                                </form>
-                            </field>
-                        </page>
-
-                        <page string="Certifications"
-                              groups="base.group_user,base.group_hr_user">
-                            <field name="certification_ids"
-                                   context="{'default_applicant_id': active_id}">
-                                <tree string="Certifications">
-                                    <field name="name" string="Certification"/>
-                                    <field name="certification"
-                                           string="# Certificate"/>
-                                    <field name="organization"
-                                           string="Issued By"/>
-                                    <field name="start_date"/>
-                                    <field name="end_date"/>
-                                </tree>
-                                <form string="Certifications">
-                                    <group>
-                                        <group name="main">
-                                            <field name="name"
-                                                   string="Certification"/>
-                                            <field name="certification"
-                                                   string="# Certification"/>
-                                            <field name="start_date"/>
-                                            <field name="is_still"/>
-                                            <field name="end_date" attrs="{'invisible':[('is_still', '=', True)]}"/>
-                                        </group>
-                                        <group>
-                                            <field name="organization"
-                                                   string="Issued By"/>
-                                            <field name="location"/>
-                                        </group>
-                                    </group>
-                                    <separator string="Description"
-                                               colspan="4"/>
-                                    <field name="description" colspan="4"
-                                           nolabel="1"/>
-                                </form>
-                            </field>
-                        </page>
-                    </notebook>
-                </field>
-            </field>
-
-        </record>
-
-
-
-
-        <record model="ir.ui.view" id="hr_applicant_fields_view_form_inherit">
-            <field name="name">hr.applicant.form</field>
-            <field name="model">hr.applicant</field>
-            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='birthday']" position="after">
-                    <field name="driving_license"/>
-                    <field name="ssn"/>
-                    <field name="citizen_restriction"/>
-                </xpath>
+                <!-- Notebook Pages -->
                 <notebook position="inside">
 
+                    <!-- Personal Information -->
+                    <page string="Personal Info" groups="base.group_user,base.group_hr_user">
+                        <group>
+                            <group string="Address">
+                                <field name="street_ht"/>
+                                <field name="street2_ht"/>
+                                <field name="city_ht"/>
+                                <field name="zip_ht"/>
+                                <field name="state_id_ht"/>
+                            </group>
+                            <group string="Status">
+                                <field name="gender" required="True"/>
+                                <field name="marital" required="True"/>
+                            </group>
+                            <group string="Birth">
+                                <field name="birthday" required="True"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="driving_license"/>
+                                <field name="ssn"/>
+                                <field name="citizen_restriction"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    <!-- Position Desired -->
                     <page string="Position Desired" groups="base.group_user,base.group_hr_user">
                         <group>
                             <field name="position_desired"/>
                             <field name="other_position_desired"/>
                         </group>
                     </page>
-                    <page string="PERSONAL INFORMATION" groups="base.group_user,base.group_hr_user">
-                        <group>
-                            <field name="driving_license"/>
-                            <field name="ssn"/>
-                            <field name="citizen_restriction"/>
-                        </group>
+
+                    <!-- Emergency Contact -->
+                    <page string="Emergency Contact" groups="base.group_user,base.group_hr_user">
+                        <field name="emergency_contact_ids" context="{'default_applicant_id': active_id}">
+                            <tree>
+                                <field name="name"/>
+                                <field name="relation"/>
+                                <field name="phone"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group name="main">
+                                        <field name="name"/>
+                                        <field name="relation"/>
+                                        <field name="phone"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
                     </page>
-                    <page string="EMERGENY INFORMATION" groups="base.group_user,base.group_hr_user">
-                    <group>
-                        <group string="Contact 1">
-                            <!-- Contact 1 -->
-                            <field name="emergency_contact_1"/>
-                            <field name="emergency_relation_1"/>
-                            <field name="emergency_phone_1"/>
-                        </group>
-                    <group  string="Contact 2">
-                            <!-- Contact 2 -->
-                            <field name="emergency_contact_2"/>
-                            <field name="emergency_relation_2"/>
-                            <field name="emergency_phone_2"/>
-                    </group>
-                
-                    <group string="Contact 3">
-                            <!-- Contact 3 -->
-                            <field name="emergency_contact_3"/>
-                            <field name="emergency_relation_3"/>
-                            <field name="emergency_phone_3"/>
-                        </group>
-                    </group>
-                    </page>
-                    <page string="PROFESSIONAL LIABILITY INSURANCE" groups="base.group_user,base.group_hr_user">
+
+                    <!-- Professional Liability Insurance -->
+                    <page string="Liability Insurance" groups="base.group_user,base.group_hr_user">
                         <group>
                             <field name="pl_insurance_name"/>
                             <field name="pl_insurance_start_date"/>
@@ -227,35 +79,37 @@
                             <field name="insurance_history_details"/>
                         </group>
                     </page>
-                    <page string="SKILLS / TRAININGS ATTENDED" groups="base.group_user,base.group_hr_user">
-                        <group>
-                            <group string="SKILL 1">
+
+                    <!-- Skills and Trainings -->
+                    <page string="Skills &amp; Trainings" groups="base.group_user,base.group_hr_user">
+                        <group string="Skills">
+                            <group string="Skill 1">
                                 <field name="skill_date_1"/>
                                 <field name="skill_name_1"/>
                             </group>
-                            <group string="SKILL 2">
+                            <group string="Skill 2">
                                 <field name="skill_date_2"/>
                                 <field name="skill_name_2"/>
                             </group>
-                            <group string="SKILL 3">
+                            <group string="Skill 3">
                                 <field name="skill_date_3"/>
                                 <field name="skill_name_3"/>
                             </group>
-                            <group string="SKILL 4">
+                            <group string="Skill 4">
                                 <field name="skill_date_4"/>
                                 <field name="skill_name_4"/>
                             </group>
                         </group>
-                        <group>
-                            <group>
-                                <field name="cpr_expiration_date"/>
-                                <field name="last_physical_exam_date"/>
-                                <field name="last_xray_date"/>
-                            </group>
+                        <group string="Medical Details">
+                            <field name="cpr_expiration_date"/>
+                            <field name="last_physical_exam_date"/>
+                            <field name="last_xray_date"/>
                         </group>
                     </page>
+
+                    <!-- References -->
                     <page string="References" groups="base.group_user,base.group_hr_user">
-                       <group>
+                        <group>
                             <group string="Reference 1">
                                 <field name="reference_name1"/>
                                 <field name="reference_rln1"/>
@@ -280,9 +134,11 @@
                                 <field name="reference_cmpny4"/>
                                 <field name="reference_contact4" widget="phone"/>
                             </group>
-                    </group>
+                        </group>
                     </page>
-                    <page string="General information fields" groups="base.group_user,base.group_hr_user">
+
+                    <!-- General Information -->
+                    <page string="General Info" groups="base.group_user,base.group_hr_user">
                         <group>
                             <group>
                                 <field name="age_validation"/>
@@ -317,15 +173,107 @@
                             <group>
                                 <field name="hear_from"/>
                             </group>
-                            
                         </group>
+                    </page>
+
+                    <!-- Academic Experiences -->
+                    <page string="Academic Experiences" groups="base.group_user,base.group_hr_user">
+                        <field name="academic_ids" context="{'default_applicant_id': active_id}">
+                            <tree>
+                                <field name="name" string="Qualification"/>
+                                <field name="study_field"/>
+                                <field name="organization" string="Institution"/>
+                                <field name="location"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="grade"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group name="main">
+                                        <field name="name" string="Qualification"/>
+                                        <field name="study_field"/>
+                                        <field name="start_date"/>
+                                        <field name="is_still" string="Present"/>
+                                        <field name="end_date" attrs="{'invisible':[('is_still', '=', True)]}"/>
+                                        <field name="grade"/>
+                                    </group>
+                                    <group>
+                                        <field name="organization" string="Institution"/>
+                                        <field name="location"/>
+                                    </group>
+                                </group>
+                                <separator string="Activities" colspan="4"/>
+                                <field name="activities"/>
+                                <separator string="Description" colspan="4"/>
+                                <field name="description" colspan="4" nolabel="1"/>
+                            </form>
+                        </field>
+                    </page>
+
+                    <!-- Professional Experiences -->
+                    <page string="Professional Experiences" groups="base.group_user,base.group_hr_user">
+                        <field name="experience_ids" context="{'default_applicant_id': active_id}">
+                            <tree>
+                                <field name="name" string="Position"/>
+                                <field name="organization" string="Employer"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group name="main">
+                                        <field name="name"/>
+                                        <field name="organization"/>
+                                        <field name="location"/>
+                                        <field name="type"/>
+                                    </group>
+                                    <group>
+                                        <field name="start_date"/>
+                                        <field name="is_still"/>
+                                        <field name="end_date" attrs="{'invisible':[('is_still', '=', True)]}"/>
+                                    </group>
+                                </group>
+                                <separator string="Description" colspan="4"/>
+                                <field name="description" colspan="4" nolabel="1"/>
+                            </form>
+                        </field>
+                    </page>
+
+                    <!-- Certifications -->
+                    <page string="Certifications" groups="base.group_user,base.group_hr_user">
+                        <field name="certification_ids" context="{'default_applicant_id': active_id}">
+                            <tree>
+                                <field name="name"/>
+                                <field name="certification"/>
+                                <field name="organization"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group name="main">
+                                        <field name="name"/>
+                                        <field name="certification"/>
+                                        <field name="start_date"/>
+                                        <field name="is_still"/>
+                                        <field name="end_date" attrs="{'invisible':[('is_still', '=', True)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="organization"/>
+                                        <field name="location"/>
+                                    </group>
+                                </group>
+                                <separator string="Description" colspan="4"/>
+                                <field name="description" colspan="4" nolabel="1"/>
+                            </form>
+                        </field>
                     </page>
                 </notebook>
             </field>
         </record>
 
 
-        
         <record id="update_sorry" model="website.page">
             <field name="url">/job-update-sorry</field>
             <field name="website_published">True</field>
@@ -360,10 +308,13 @@
                                                 <h4 class="mt0" t-field="responsible.name"/>
                                                 <p t-field="responsible.function"/>
                                                 <t t-if='responsible.email'>
-                                                    <i class="fa fa-envelope" role="img" aria-label="Email" title="Email"></i> <a t-attf-href="mailto:#{responsible.email}" t-esc="responsible.email"/>
+                                                    <i class="fa fa-envelope" role="img" aria-label="Email" title="Email"></i>
+                                                    <a t-attf-href="mailto:#{responsible.email}" t-esc="responsible.email"/>
                                                 </t>
                                                 <t t-if='responsible.phone'>
-                                                    <br/><i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"></i> <span t-field="responsible.phone"/>
+                                                    <br/>
+                                                    <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"></i>
+                                                    <span t-field="responsible.phone"/>
                                                 </t>
                                             </div>
                                             <div class="col-lg-12 mt32 text-center">

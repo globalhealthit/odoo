@@ -12,7 +12,7 @@ class HrCurriculum(models.Model):
     end_date = fields.Date('End date')
     grade = fields.Char('Grade')
     organization = fields.Char('Organization',
-                               help="Employer, School, University, "
+                                help="Employer, School, University, "
                                     "Organization, Institution, Company, "
                                     "Certification "
                                     "Authority")

@@ -231,6 +231,53 @@ class CustomController(http.Controller):
         """
         return request.env['hr.certification'].sudo().browse(
             kwargs.get('id')).unlink()
+        
+        
+    @http.route(['/add_emergency_contact'], type='json', auth="public", website=True)
+    def add_emergency_contact(self, **kwargs):
+        """A Method used to add Emergency Contact details of the applicant.
+
+        Returns:
+            It returns True after creating the record for
+            the emergency contact of the applicant.
+        """
+        vals = {
+            'name': kwargs.get('name'),
+            'relation': kwargs.get('relation'),
+            'phone': kwargs.get('phone'),
+            'partner_id': request.env['res.users'].browse(request.uid).partner_id.id,
+        }
+        return request.env['emergency.contact'].sudo().create(vals).id
+
+    @http.route(['/edit_emergency_contact'], type='json', auth="public", website=True)
+    def edit_emergency_contact(self, **kwargs):
+        """A Method used to Edit Emergency Contact details of the applicant.
+
+        Returns:
+            It returns True after updating the record for
+            the emergency contact of the applicant.
+        """
+        vals = {
+            'name': kwargs.get('name'),
+            'relation': kwargs.get('relation'),
+            'phone': kwargs.get('phone'),
+            'partner_id': request.env['res.users'].browse(request.uid).partner_id.id,
+        }
+        request.env['emergency.contact'].sudo().browse(
+            int(kwargs.get('id'))).write(vals)
+        return kwargs.get('id')
+
+    @http.route(['/delete_emergency_contact'], type='json', auth="public",
+                website=True)
+    def delete_emergency_contact(self, **kwargs):
+        """A Method used to Delete Emergency Contact detail of the applicant.
+
+        Returns:
+            It returns True after creating the record for
+            the education of the applicant.
+        """
+        return request.env['emergency.contact'].sudo().browse(
+            kwargs.get('id')).unlink()
 
 
 class InheritedCustomerPortal(CustomerPortal):
@@ -401,8 +448,7 @@ class WebsiteHrRecruitment(Home):
         application = request.env['hr.applicant']
 
         env = request.env(user=SUPERUSER_ID)
-        partner = env['res.partner'].sudo().browse(
-            int(kwargs.get('partner_id')))
+        partner = env['res.partner'].sudo().browse(int(kwargs.get('partner_id')))
         job_my = env['hr.job'].sudo().search(
             [('id', '=', int(kwargs.get('job_id')))], limit=1)
         vals = {
@@ -414,6 +460,7 @@ class WebsiteHrRecruitment(Home):
             'academic_ids': [(6, 0, partner.academic_ids.ids)],
             'experience_ids': [(6, 0, partner.experience_ids.ids)],
             'certification_ids': [(6, 0, partner.certification_ids.ids)],
+            'emergency_contact_ids': [(6, 0, partner.emergency_contact_ids.ids)],
             'country_id': partner.country_id.id,
             'partner_id': partner.id,
         }
@@ -442,19 +489,6 @@ class WebsiteHrRecruitment(Home):
             'ssn': kwargs.get('ssn'),
             'citizen_restriction': kwargs.get('citizen_restriction'),
 
-            # Emergency Contacts
-            'emergency_contact_1': kwargs.get('emergency_contact_1'),
-            'emergency_contact_2': kwargs.get('emergency_contact_2'),
-            'emergency_contact_3': kwargs.get('emergency_contact_3'),
-
-            'emergency_relation_1': kwargs.get('emergency_relation_1'),
-            'emergency_relation_2': kwargs.get('emergency_relation_2'),
-            'emergency_relation_3': kwargs.get('emergency_relation_3'),
-
-            'emergency_phone_1': kwargs.get('emergency_phone_1'),
-            'emergency_phone_2': kwargs.get('emergency_phone_2'),
-            'emergency_phone_3': kwargs.get('emergency_phone_3'),
-            
             # SKILLS/TRAININGS ATTENDED
             'skill_date_1': kwargs.get('skill_date_1'),
             'skill_name_1': kwargs.get('skill_name_1'),
@@ -467,7 +501,7 @@ class WebsiteHrRecruitment(Home):
 
             'skill_date_4': kwargs.get('skill_date_4'),
             'skill_name_4': kwargs.get('skill_name_4'),
-  
+
             'cpr_expiration_date': kwargs.get('cpr_expiration_date'),
             'last_physical_exam_date': kwargs.get('last_physical_exam_date'),
             'last_xray_date': kwargs.get('last_xray_date'),          
